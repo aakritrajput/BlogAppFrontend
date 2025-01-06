@@ -13,6 +13,8 @@ function Register() {
     const [loading, setLoading] = useState(false);
     const { register, handleSubmit, formState: {errors}} = useForm();
     const SubmitHandler = async(data)=>{
+      setErrorMessage("");
+      setSuccessMessage("");
         console.log(data)
         setLoading(true)
         try {
@@ -46,7 +48,7 @@ function Register() {
       </div>
       <div className="p-4 bg-white rounded-xl shadow-lg shadow-black">
         <h1 className="w-[100%] text-center text-[#207F87] text-4xl mb-2">Register</h1>
-        <p className="text-black mb-3 text-center w-full">Don&apos;t have an account ? <Link to={"/login"} className="text-[#b5a82f] ">Login</Link></p>
+        <p className="text-black mb-3 text-center w-full">Already have an account ? <Link to={"/login"} className="text-[#b5a82f] ">Login</Link></p>
         <form onSubmit={handleSubmit(SubmitHandler)} className="w-[100%]">
             <Input 
             label="Enter your full name" 
