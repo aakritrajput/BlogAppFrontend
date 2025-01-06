@@ -59,8 +59,6 @@ function VerifyEmail() {
           <path d="M10 15l2 2"></path>
           <path d="M10 15l-2 2"></path>
         </svg>
-
-
         
         <h1 className="text-[black] font-semibold text-[40px]">{errorMessage}</h1>
         </div>}
