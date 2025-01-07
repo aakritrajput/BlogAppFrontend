@@ -1,11 +1,14 @@
 //import React from 'react'
 import axios from "axios"
 import { useState, useEffect } from "react"
-import { NavLink, Link, useNavigate } from "react-router-dom"
+import { NavLink, Link } from "react-router-dom"
+import { useDispatch } from "react-redux"
+import { unsetUser } from "../store/userSlice.js"
+
 function Header() {
     const [loggedIn, setLoggedIn] = useState(false)
     const [loading, setLoading] = useState(false)
-    const navigate = useNavigate()
+    const dispatch = useDispatch()
     useEffect(() => {
         const checkLogin = async () => {
             try {
@@ -26,6 +29,7 @@ function Header() {
         try {
             const response = await axios.get("/api/v1/user/logout", { withCredentials: true})
             console.log("response logout : ", response)
+            dispatch(unsetUser())
             location.reload()
         } catch (error) {
             alert(error.response.data)
