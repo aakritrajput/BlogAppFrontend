@@ -59,13 +59,13 @@ function Header() {
                 relative after:absolute after:bottom-0 after:left-0 
                 after:w-full after:h-[2px] after:bg-[#207F87] 
                 after:scale-x-0 hover:after:scale-x-100 
-                transition-all duration-300 ease-in-out `}>
+                transition-all duration-1000 ease-linear `}>
                     Search
                 </NavLink>
             </li>
             {loggedIn && <li>
-                <NavLink to="/create" className={({ isActive })=> `${isActive ? "text-[#207F87] text-[25px] " : "text-[#989494] text-[25px] hover:text-[#7a7777]"} 
-                relative after:absolute after:bottom-0 after:left-0 
+                <NavLink to="/create" className={({ isActive })=> `${isActive ? "text-[#207F87]  text-[25px] after:scale-x-100" : "text-[#989494] text-[25px] hover:text-[#7a7777]"} 
+                relative after:absolute after:bottom-[-3px] after:left-0 
                 after:w-full after:h-[2px] after:bg-[#207F87] 
                 after:scale-x-0 hover:after:scale-x-100 
                 transition-all duration-300 ease-in-out `}>

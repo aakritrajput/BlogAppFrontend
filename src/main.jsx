@@ -9,7 +9,9 @@ import { Provider } from 'react-redux'
 import store from './components/store/store.js'
 import ResendVerificationLink from './components/verification/ResendVerificationLink.jsx'
 import VerifyEmail from './components/verification/verifyEmail.jsx'
-import Header from './components/header/Header.jsx'
+import CreateBlog from './components/createBlog/CreateBlog.jsx'
+import Root from './components/root/Root.jsx'
+import Home from './components/home/Home.jsx'
 
 const router = createBrowserRouter([
   {
@@ -30,7 +32,17 @@ const router = createBrowserRouter([
   },
   {
     path: "/",
-    element: <Header/>
+    element: <Root/>,
+    children: [
+      {
+        path: "",
+        element: <Home/>
+      },
+      {
+        path: "create",
+        element: <CreateBlog/>
+      }
+    ]
   }
 ])
 
