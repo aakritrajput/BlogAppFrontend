@@ -18,7 +18,7 @@ function Register() {
         console.log(data)
         setLoading(true)
         try {
-            const response = await axios.post("http://localhost:5000/api/v1/user/register", data)
+            const response = await axios.post("/api/v1/user/register", data)
             console.log(response.data.message)
             setSuccessMessage(response.data.message)
         } catch (error) {

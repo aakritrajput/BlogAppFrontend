@@ -16,7 +16,7 @@ function VerifyEmail() {
         setLoading(true);
         setErrorMessage("");
         setSuccessMessage("");
-        const verificationLink = `http://localhost:5000/api/v1/user/register/verify-token?token=${encodeURIComponent(token)}&email=${encodeURIComponent(email)}`;
+        const verificationLink = `/api/v1/user/register/verify-token?token=${encodeURIComponent(token)}&email=${encodeURIComponent(email)}`;
         try {
             const response = await axios.get(verificationLink)
             setSuccessMessage(response.data.message)

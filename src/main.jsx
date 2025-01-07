@@ -9,6 +9,7 @@ import { Provider } from 'react-redux'
 import store from './components/store/store.js'
 import ResendVerificationLink from './components/verification/ResendVerificationLink.jsx'
 import VerifyEmail from './components/verification/verifyEmail.jsx'
+import Header from './components/header/Header.jsx'
 
 const router = createBrowserRouter([
   {
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
   {
     path: "/verifyEmail",
     element: <VerifyEmail/>
+  },
+  {
+    path: "/",
+    element: <Header/>
   }
 ])
 
