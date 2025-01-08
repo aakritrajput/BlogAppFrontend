@@ -12,6 +12,7 @@ import VerifyEmail from './components/verification/verifyEmail.jsx'
 import CreateBlog from './components/createBlog/CreateBlog.jsx'
 import Root from './components/root/Root.jsx'
 import Home from './components/home/Home.jsx'
+import Search from './components/search/Search.jsx'
 
 const router = createBrowserRouter([
   {
@@ -41,6 +42,10 @@ const router = createBrowserRouter([
       {
         path: "create",
         element: <CreateBlog/>
+      },
+      {
+        path: "search",
+        element: <Search/>
       }
     ]
   }
