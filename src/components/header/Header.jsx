@@ -3,7 +3,7 @@ import axios from "axios"
 import { useState, useEffect } from "react"
 import { NavLink, Link } from "react-router-dom"
 import { useDispatch } from "react-redux"
-import { unsetUser } from "../store/userSlice.js"
+import { setUser, unsetUser } from "../store/userSlice.js"
 
 function Header() {
     const [loggedIn, setLoggedIn] = useState(false)
@@ -15,14 +15,16 @@ function Header() {
                 const response = await axios.get('/api/v1/user/profile', { withCredentials: true });
                 console.log("response",response);
                 setLoggedIn(true);
+                dispatch(setUser(response.data))
             } catch (error) {
                 console.log("error header",error);
                 setLoggedIn(false);
+                dispatch(unsetUser())
             }
         };
     
         checkLogin(); 
-    }, []);
+    }, [dispatch]);
 
     const LogoutHandler = async() => {
         setLoading(true)

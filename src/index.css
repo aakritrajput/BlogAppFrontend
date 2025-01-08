@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+.body {
+    background-color: #207F87;
+}
 .animate-spin {
     animation: spin 1s linear infinite;
 }
