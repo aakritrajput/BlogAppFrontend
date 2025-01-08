@@ -42,13 +42,13 @@ function BlogCard({coverImage , title, content , authorImage, authorName, blogId
 
 
   return (
-    <div className=" w-[260px] bg-white rounded-2xl min-h-[230px] shadow-lg shadow-black">
+    <div className=" w-[290px] bg-white rounded-2xl min-h-[230px] shadow-lg shadow-black">
       <div className="border-b-2 h-[130px] relative  border-b-black w-full ">
         <img src={coverImage} alt={title} className="absolute rounded-t-2xl top-0 left-0 object-cover w-full h-full"/> 
       </div>
       <div className="p-2 flex gap-2">
         <div >
-          <h1 className="text-black">{title}</h1>
+          <h1 className="text-black font-semibold">{title}</h1>
           <p className="text-[#413E3E] flex flex-wrap leading-none ">{previewContent} <button onClick={readMoreHandler} className="bg-transparent border-none text-[#f19b32]">read more</button></p>
         </div>
         <div className="flex flex-col justify-center items-center">

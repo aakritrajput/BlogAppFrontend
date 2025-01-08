@@ -26,33 +26,38 @@ function Home() {
     }finally{
       setLoading(false)
     }
-  },[page,limit])
+  },[page])
 
   const handleScroll = useCallback((e) => {
-    console.log("handle scroll triggered")
     const nearBottom = e.target.scrollHeight - e.target.scrollTop <= e.target.clientHeight + 50; // Start fetching when 50px from the bottom
     if (nearBottom && hasMore && !loading) {
       setPage((prevPage) => prevPage + 1); // Increment page to load more blogs
+      console.log("handlescroll triggered !!")
     }
-  }, [hasMore, loading]);
+  },[loading, hasMore])
 
-  useEffect(() => {
-    console.log("getBlogs()")
+  useEffect(()=>{
     getBlogs();
-  }, [getBlogs]);
+  }, [getBlogs])
+
+  
+
 
   return (
     <div onScroll={handleScroll}  className="bg-[#DDDBDB] pt-8 w-[100vw] h-[90vh] overflow-y-auto ">
-      <div className="px-[40px] grid grid-cols-4 gap-7 ">
+      <div className="px-[40px] grid grid-cols-4 gap-5 gap-y-11">
         {blogs.map((blog)=>(
-          <div key={blog._id} className="flex justify-center">
+          <div key={blog._id} className="flex justify-center ">
             <BlogCard coverImage={blog.coverImage} title={blog.title} content={blog.content} authorImage={blog.author?.profilePic} authorName={blog.author?.username} blogId={blog._id} authorId={blog.author?._id}/>
           </div>
         ))}
       </div>
-      {loading && <div>Loading...</div>} 
-      {errorMessage && <div style={{ color: 'red' }}>{errorMessage}</div>} 
-      {!hasMore && <div>No more blogs to load</div>}
+      {loading && 
+        <div className="w-full h-[30px]  flex justify-center items-center my-7">
+            <div className="animate-spin rounded-full h-[30px] w-[30px] border-t-[5px] border-[#207F87]"></div>
+        </div>}
+      {errorMessage && <div className="text-red-600 w-full text-centre my-7" >{errorMessage}</div>} 
+      {!hasMore && <div className="w-full text-center my-7">No more blogs to load</div>}
     </div>
   )
 }

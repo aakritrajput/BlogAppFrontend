@@ -28,6 +28,7 @@ function CreateBlog() {
           })
         console.log("blog created successfully : ", response)
         setSuccessMessage(response.data.message)
+        
       } catch (error) {
          setErrorMessage(error.response.data)
       }finally{
