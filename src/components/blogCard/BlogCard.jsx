@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 import defaultProfilePicture from "../../../public/defaultProfilePicture.jpeg"
 
 
-function BlogCard({coverImage , title, content , authorImage, authorName, blogId, authorId}) {
+function BlogCard({coverImage , title, content , authorImage="", authorName, blogId, authorId}) {
   const [loggedIn, setLoggedIn] = useState(false)
   const maxLength = 50 ;
   const previewContent = content.length > maxLength ? content.slice(0, maxLength) + "..." : content ;

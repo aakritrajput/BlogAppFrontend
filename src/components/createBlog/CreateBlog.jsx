@@ -2,7 +2,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import { useForm } from 'react-hook-form'
 function CreateBlog() {
-    const {register, handleSubmit, formState: {errors}} = useForm();
+    const {register, handleSubmit, reset, formState: {errors}} = useForm();
     const [loading , setLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
     const [successMessage, setSuccessMessage] = useState("");
@@ -33,6 +33,7 @@ function CreateBlog() {
          setErrorMessage(error.response.data)
       }finally{
         setLoading(false)
+        reset()
       }
     }
   return (
@@ -64,7 +65,7 @@ function CreateBlog() {
         {errorMessage && <p className="text-red-600 mt-2 w-full font-bold flex justify-center">{errorMessage}</p>}
         {successMessage && <p className="text-green-600 mt-2 w-full font-bold flex justify-center ">{successMessage}</p>}
         <div className='flex justify-center w-full mt-4'>
-          <button type="submit" disabled={loading} className='bg-[#207F87] px-3 py-2 rounded-md hover:bg-[#5fb5bc] text-white'>POST</button>
+          <button type="submit" disabled={loading}  className='bg-[#207F87] px-3 py-2 rounded-md hover:bg-[#5fb5bc] text-white'>POST</button>
         </div>
         
       </form>

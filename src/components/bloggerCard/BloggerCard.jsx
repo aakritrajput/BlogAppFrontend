@@ -6,20 +6,21 @@ import PropTypes from "prop-types";
 import defaultProfilePicture from "../../../public/defaultProfilePicture.jpeg"
 
 
-function BloggerCard({username, fullname, bio, userId, profilePic}) {
+function BloggerCard({username, fullname, bio, userId, profilePic=""}) {
     const [loading, setLoading] = useState(false)
     const [isFollowing , setIsFollowing] = useState(false); // if i follow the user 
     const [isFollowed, setIsFollowed] = useState(false);  // if user follow me 
     const [followers, setFollowers] = useState(0);
     const [following, setFollowing] = useState(0);
     const [errorMessage, setErrorMessage] = useState("");
+    const [btnClicked, setBtnClicked] = useState(false);
 
     useEffect(()=>{
         const getUserFollowings = async() => {
             setLoading(true);
             try {
-                const FollowingCountResponse = await axios.get(`api/v1/followings/followerAndFollowingCount/${userId}`,{withCredentials: true})
-                const followingStatusResponse = await axios.get(`api/v1/followings/followingStatus/${userId}`,{withCredentials: true})
+                const FollowingCountResponse = await axios.get(`/api/v1/followings/followerAndFollowingCount/${userId}`,{withCredentials: true})
+                const followingStatusResponse = await axios.get(`/api/v1/followings/followingStatus/${userId}`,{withCredentials: true})
     
                 //response.data.data.followers && following  --> count
                 // response.data.data.isFollowing && isFollowedByBlogger --> followingStatus
@@ -35,11 +36,32 @@ function BloggerCard({username, fullname, bio, userId, profilePic}) {
             }
         }
         getUserFollowings();
-    },[userId])
+    },[userId, btnClicked])
+
+    const toggleHandler = async() => {
+        setLoading(true)
+        try {
+            const response = await axios.patch(`/api/v1/followings/toggleFollow/${userId}`, {withCredentials: true})
+            if(response.data.data.Following === true){
+                setIsFollowing(true);
+            }else{
+                setIsFollowing(false);
+            }
+        } catch (error) {
+            setErrorMessage(error.response.data)
+        }finally{
+            setLoading(false);
+            if(btnClicked === true){
+                setBtnClicked(false);
+            }else{
+                setBtnClicked(true);
+            }
+        }
+    }
 
   return (
     <div className="bg-white flex gap-2 rounded-xl justify-between p-3">
-      <div className="w-70% border-r-4 h-full border-r-[#d3d2d2] flex gap-3">
+      <div className="w-75% border-r-4 h-full pr-3 border-r-[#d3d2d2] flex gap-3">
         <div className="h-full flex items-center">
             {profilePic.length > 0 ? <img src={profilePic}  className="w-[70px] h-[70px] rounded-full" /> : <img src={defaultProfilePicture}  className="w-[70px] h-[70px] rounded-full" /> }
         </div>
@@ -54,14 +76,28 @@ function BloggerCard({username, fullname, bio, userId, profilePic}) {
             {errorMessage  && <p className="text-red-500">{errorMessage.message || errorMessage}</p>}
         </div>
       </div>
-      <div className="w-30% h-full flex justify-center mx-2.5 items-center">
-        <button className="w-full h-[40px] relative mb-2">
-            {isFollowing ? <div className="px-3.5 py-2.5 text-center w-full h-full text-[gray] bg-[#aedde1]">Following</div> : <div className="px-3.5 py-2.5 text-center text-white w-full h-full bg-[#207F87]">Follow</div>}
-            {loading && 
-            <div className="w-full h-full absolute flex justify-center items-center my-7">
-                <div className="animate-spin rounded-full h-[25px] w-[25px] border-t-[5px] border-[#24393b]"></div>
-            </div>}
-        </button>
+      <div className="w-25% h-full flex flex-col justify-center mx-2.5 items-center">
+      <button
+        className="w-full h-[40px] relative mb-2"
+        disabled={loading}
+        onClick={toggleHandler}
+      >
+        {isFollowing ? (
+          <div className="px-3.5 py-2.5 text-center w-full h-full text-[gray] bg-[#aedde1]">
+            Following
+          </div>
+        ) : (
+          <div className="px-3.5 py-2.5 text-center text-white w-full h-full bg-[#207F87]">
+            Follow
+          </div>
+        )}
+        {loading && (
+          <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center bg-opacity-10 bg-black z-20">
+            <div className="animate-spin rounded-full h-[25px] w-[25px] border-t-[5px] border-[#24393b]"></div>
+          </div>
+        )}
+    </button>
+
         {isFollowed && <p className="text-[#207F87]"> Follows you </p>}
       </div>
     </div>
