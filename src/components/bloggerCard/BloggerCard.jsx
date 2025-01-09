@@ -4,6 +4,7 @@ import axios from "axios";
 import { useEffect, useState } from "react"
 import PropTypes from "prop-types";
 import defaultProfilePicture from "../../../public/defaultProfilePicture.jpeg"
+import { useNavigate } from "react-router-dom";
 
 
 function BloggerCard({username, fullname, bio, userId, profilePic=""}) {
@@ -14,6 +15,7 @@ function BloggerCard({username, fullname, bio, userId, profilePic=""}) {
     const [following, setFollowing] = useState(0);
     const [errorMessage, setErrorMessage] = useState("");
     const [btnClicked, setBtnClicked] = useState(false);
+    const navigate = useNavigate();
 
     useEffect(()=>{
         const getUserFollowings = async() => {
@@ -59,9 +61,13 @@ function BloggerCard({username, fullname, bio, userId, profilePic=""}) {
         }
     }
 
+    const profileClickHandler = () => {
+        navigate(`/userProfile/${userId}`)
+    }
+
   return (
     <div className="bg-white flex gap-2 rounded-xl justify-between p-3">
-      <div className="w-75% border-r-4 h-full pr-3 border-r-[#d3d2d2] flex gap-3">
+      <button className="w-75% border-r-4 h-full pr-3 border-r-[#d3d2d2] flex gap-3" onClick={profileClickHandler}>
         <div className="h-full flex items-center">
             {profilePic.length > 0 ? <img src={profilePic}  className="w-[70px] h-[70px] rounded-full" /> : <img src={defaultProfilePicture}  className="w-[70px] h-[70px] rounded-full" /> }
         </div>
@@ -75,7 +81,7 @@ function BloggerCard({username, fullname, bio, userId, profilePic=""}) {
             </div>
             {errorMessage  && <p className="text-red-500">{errorMessage.message || errorMessage}</p>}
         </div>
-      </div>
+      </button>
       <div className="w-25% h-full flex flex-col justify-center mx-2.5 items-center">
       <button
         className="w-full h-[40px] relative mb-2"
@@ -83,11 +89,11 @@ function BloggerCard({username, fullname, bio, userId, profilePic=""}) {
         onClick={toggleHandler}
       >
         {isFollowing ? (
-          <div className="px-3.5 py-2.5 text-center w-full h-full text-[gray] bg-[#aedde1]">
+          <div className="px-3.5 py-2.5 text-center w-full h-full rounded-md text-[gray] bg-[#aedde1]">
             Following
           </div>
         ) : (
-          <div className="px-3.5 py-2.5 text-center text-white w-full h-full bg-[#207F87]">
+          <div className="px-3.5 py-2.5 text-center text-white w-full rounded-md h-full bg-[#207F87]">
             Follow
           </div>
         )}
@@ -98,7 +104,7 @@ function BloggerCard({username, fullname, bio, userId, profilePic=""}) {
         )}
     </button>
 
-        {isFollowed && <p className="text-[#207F87]"> Follows you </p>}
+      {isFollowed && <p className="text-[#207F87]"> Follows you </p>}
       </div>
     </div>
   )

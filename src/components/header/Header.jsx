@@ -2,22 +2,24 @@
 import axios from "axios"
 import { useState, useEffect } from "react"
 import { NavLink, Link } from "react-router-dom"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { setUser, unsetUser } from "../store/userSlice.js"
 
 function Header() {
     const [loggedIn, setLoggedIn] = useState(false)
     const [loading, setLoading] = useState(false)
     const dispatch = useDispatch()
+    const user = useSelector((state)=> state.user.user)
+    console.log("current user is :", user)
     useEffect(() => {
         const checkLogin = async () => {
             try {
                 const response = await axios.get('/api/v1/user/profile', { withCredentials: true });
-                console.log("response",response);
+                console.log("response : set user in redux store !!");
                 setLoggedIn(true);
-                dispatch(setUser(response.data))
+                dispatch(setUser(response.data.data))
             } catch (error) {
-                console.log("error header",error);
+                console.log("error header and unset user !!", error);
                 setLoggedIn(false);
                 dispatch(unsetUser())
             }
@@ -88,7 +90,7 @@ function Header() {
                 </NavLink>
             </li>
             {loggedIn && <li>
-                <NavLink to="/profile" className={({ isActive })=> `${isActive ? "text-[#207F87] text-[25px] after:scale-x-100" : "text-[#989494] text-[25px] hover:text-[#7a7777]"} 
+                <NavLink to={`/userProfile/${user._id}`} className={({ isActive })=> `${isActive ? "text-[#207F87] text-[25px] after:scale-x-100" : "text-[#989494] text-[25px] hover:text-[#7a7777]"} 
                 relative after:absolute after:bottom-0 after:left-0 
                 after:w-full after:h-[2px] after:bg-[#207F87] 
                 after:scale-x-0 hover:after:scale-x-100 
