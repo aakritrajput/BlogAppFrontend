@@ -30,7 +30,7 @@ function CreateBlog() {
         setSuccessMessage(response.data.message)
         
       } catch (error) {
-         setErrorMessage(error.response.data)
+         error.status === 401 ? setErrorMessage("You are not authorized to perform this action or perform this task !! please login .. ") : setErrorMessage(error.response.data)
       }finally{
         setLoading(false)
         reset()

@@ -24,10 +24,7 @@ function Profile() {
     const [isYourBlogs , setIsYourBlogs] = useState(true);
     const [isSavedBlogs, setIsSavedBLogs] = useState(false);
     const [isLikedBlogs, setIsLikedBlogs] = useState(false);
-    
-    console.log(`userId = ${userId} and currentUser : ${currentUser}`)
-    
-    console.log("component rendered")
+
 
     useEffect(() => {
       if (userId === currentUser?._id) {
@@ -41,17 +38,13 @@ function Profile() {
       setIsYourBlogs(true);
       setIsSavedBLogs(false);
       setIsLikedBlogs(false);
-      console.log(" useEffect runs ")
         const getUserProfile = async() => {
-          console.log("userProflie runs")
             setLoading(true);
             try {
                 const response = await axios.get(`/api/v1/user/userProfile/${userId}`,{withCredentials: true})
                 setProfile(response.data.data)
-                console.log(`response.data.data : ` , response.data.data)
             } catch (error) {
-                setErrorMessage(error.response.data)
-                console.log("error occured in useeffect get profile ", error.message)
+              error.status === 401 ? setErrorMessage("You are not authorized to perform this action or perform this task !! please login .. ") : setErrorMessage(error.response.data)
             }
         }
 
@@ -61,17 +54,14 @@ function Profile() {
                 const followingStatusResponse = await axios.get(`/api/v1/followings/followingStatus/${userId}`,{withCredentials: true})
                 const contentResponse = await axios.get(`/api/v1/blog/userBlogs/${userId}`, {withCredentials: true})
                 setContent(contentResponse.data.data);
-                console.log('contentResponse.data.data', contentResponse.data.data)
                 setIsFollowing(followingStatusResponse.data.data.isFollowing);
                 setIsFollowed(followingStatusResponse.data.data.isFollowedByBlogger);
-                console.log(`dashboard response:`, response);
                 setBlogsCount(response.data.data.totalBlogs);
                 setFollowersCount(response.data.data.followers);
                 setFollowingCount(response.data.data.following);
                 setLikesCount(response.data.data.totalLikes);
             } catch (error) {
-                setErrorMessage(error.response.data);
-                console.log(error);
+              error.status === 401 ? setErrorMessage("You are not authorized to perform this action or perform this task !! please login .. ") : setErrorMessage(error.response.data)
             }finally{
               setLoading(false)
             }
@@ -110,7 +100,7 @@ function Profile() {
         const contentResponse = await axios.get(`/api/v1/blog/userBlogs/${userId}`, {withCredentials: true});
         setContent(contentResponse.data.data);
       } catch (error) {
-        setErrorMessage(error.response.data);
+        error.status === 401 ? setErrorMessage("You are not authorized to perform this action or perform this task !! please login .. ") : setErrorMessage(error.response.data)
       }finally{
         setLoading(false);
         
@@ -126,7 +116,7 @@ function Profile() {
         const contentResponse = await axios.get(`/api/v1/like/usersLikedBlogs`, {withCredentials: true});
         setContent(contentResponse.data.data);
       } catch (error) {
-        setErrorMessage(error.response.data);
+        error.status === 401 ? setErrorMessage("You are not authorized to perform this action or perform this task !! please login .. ") : setErrorMessage(error.response.data)
       }finally{
         setLoading(false);
         
@@ -142,34 +132,32 @@ function Profile() {
         const contentResponse = await axios.get(`/api/v1/user/savedBlogs`, {withCredentials: true});
         setContent(contentResponse.data.data);
       } catch (error) {
-        setErrorMessage(error.response.data);
+        error.status === 401 ? setErrorMessage("You are not authorized to perform this action or perform this task !! please login .. ") : setErrorMessage(error.response.data)
       }finally{
         setLoading(false);
       }
     }
     
-    console.log("profile :", profile)
-    console.log("content:", content)
 
   return (
     <div className='min-h-[100vh] relative '>
       {loading && 
-        <div className="w-full h-[100vh] absolute flex justify-center items-center bg-[#000000c8]">
+        <div className="w-full h-[100vh] absolute flex justify-center z-30 items-center bg-[#000000c8]">
             <div className="animate-spin rounded-full h-[10vw] w-[10vw] border-t-[10px] border-[#207F87]"></div>
         </div>}
       <div className='mb-5'>
-        <div className='w-full h-[130px] relative'>
+        <div className='w-full  h-[130px] relative'>
             {profile?.bannerPic?.length > 0 ? <img src={profile?.bannerPic} className='w-full h-full object-cover'/> : <div className='w-full h-full object-cover bg-[#364E4B]'></div>}
         </div>
-        <div className='  flex gap-7  px-[50px] py-4'>
+        <div className=' border-t-[4px] border-t-[#207F87] flex gap-7  px-[50px] py-4'>
             <div className='flex gap-5 pl-[50px] '>
-                <div >
+                <div>
                    { profile?.profilePic?.length > 0 ? <img src={profile?.profilePic}  className='w-[170px]  top-[-30px] h-[170px] rounded-full'/> : <img src={defaultProfilePicture} className='w-[150px] h-[150px]   rounded-full'/>}
                 </div>
                 <div className='py-3 flex flex-col justify-between items-center gap-1'>
                     <div>
                       <h1 className='font-bold text-lg pl-2 text-black'>{profile?.fullname}</h1>
-                      <h3 className='text-[#393939] pl-2'>{profile?.username}</h3>
+                      <h3 className='text-[#393939] font-semibold pl-2'>{profile?.username}</h3>
                       <p className='text-[#323232] pl-2'>{profile?.bio}</p>
                     </div>
                     {profileOwner ? <Link to="/editProfile" className='px-3.5 py-2.5 text-center w-full   rounded-md text-[White] bg-[#207F87]'>Edit Profile</Link>

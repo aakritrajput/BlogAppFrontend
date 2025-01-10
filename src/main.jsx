@@ -14,6 +14,8 @@ import Root from './components/root/Root.jsx'
 import Home from './components/home/Home.jsx'
 import Search from './components/search/Search.jsx'
 import Profile from './components/profile/Profile.jsx'
+import EditProfile from './components/profile/EditProfile.jsx'
+import Blogs from './components/blog/Blogs.jsx'
 
 const router = createBrowserRouter([
   {
@@ -53,6 +55,14 @@ const router = createBrowserRouter([
         element: <Profile/>
       }
     ]
+  },
+  {
+    path: "/editProfile",
+    element: <EditProfile/>
+  },
+  {
+    path: "/blog/:blogId/:authorId",
+    element: <Blogs/>
   }
 ])
 

@@ -26,8 +26,8 @@ function Search() {
             console.log("response from blogsearch",response)
             setHasMore(page < response.data.data.totalPages)
         } catch (error) {
-            setErrorMessage(error.response.data)
-            console.log(`from search error.response.data : ${error.response.data}`)
+            error.status === 401 ? setErrorMessage("You are not authorized to perform this action or perform this task !! please login .. ") : setErrorMessage(error.response.data)
+            console.log(`from search error.response.data : ${error.status}`)
         }finally{
             setLoading(false)
         }
@@ -42,7 +42,7 @@ function Search() {
         setItems(response.data.data)
         console.log("response from blogger search :", response)
       } catch (error) {
-        setErrorMessage(error.response.data)
+        error.status === 401 ? setErrorMessage("You are not authorized to perform this action or perform this task !! please login .. ") : setErrorMessage(error.response.data)
         console.log(`from 2nd search error.response.data : ${error.response.data}`)
       }finally{
         setLoading(false)

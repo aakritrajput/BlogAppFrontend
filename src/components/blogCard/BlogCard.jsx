@@ -26,7 +26,7 @@ function BlogCard({coverImage , title, content , authorImage="", authorName, blo
 
   const readMoreHandler = () => {
     if(loggedIn){
-      navigate(`/blog/${blogId}`)
+      navigate(`/blog/${blogId}/${authorId}`)
     }else{
       alert("Please login to read and create Blogs ")
     }
@@ -49,7 +49,7 @@ function BlogCard({coverImage , title, content , authorImage="", authorName, blo
       <div className="p-2 flex gap-2">
         <div >
           <h1 className="text-black font-semibold">{title}</h1>
-          <p className="text-[#413E3E] flex flex-wrap leading-none ">{previewContent} <button onClick={readMoreHandler} className="bg-transparent border-none text-[#f19b32]">read more</button></p>
+          <p className="text-[#413E3E] flex flex-wrap leading-none ">{previewContent} <button onClick={readMoreHandler} className="bg-transparent hover:text-[#e4ac69] border-none text-[#f19b32]"><u>read more</u></button></p>
         </div>
         <div className="flex flex-col justify-center items-center">
           <button onClick={authorProfileHandler} className="bg-transparent flex flex-col justify-center items-center border-none">

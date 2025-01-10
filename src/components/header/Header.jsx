@@ -10,18 +10,16 @@ function Header() {
     const [loading, setLoading] = useState(false)
     const dispatch = useDispatch()
     const user = useSelector((state)=> state.user.user)
-    console.log("current user is :", user)
     useEffect(() => {
         const checkLogin = async () => {
             try {
                 const response = await axios.get('/api/v1/user/profile', { withCredentials: true });
-                console.log("response : set user in redux store !!");
                 setLoggedIn(true);
                 dispatch(setUser(response.data.data))
             } catch (error) {
-                console.log("error header and unset user !!", error);
                 setLoggedIn(false);
-                dispatch(unsetUser())
+                dispatch(unsetUser());
+                console.log(error.status)
             }
         };
     
@@ -36,7 +34,7 @@ function Header() {
             dispatch(unsetUser())
             location.reload()
         } catch (error) {
-            alert(error.response.data)
+            alert(error.status === 401 ? "You are not authorized to perform this action or perform this task !! please login .. " : error.response.data)
         }finally{
             setLoading(false)
         }
