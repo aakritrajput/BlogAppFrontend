@@ -1,15 +1,20 @@
 import {useEffect, useState} from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import defaultProfilePicture from "../../../public/defaultProfilePicture.jpeg"
+import likedPng from "../../../public/like-icon-vector-illustration.jpg"
+import unLikedPng from "../../../public/like-icon-vector-illustration (1).jpg"
 import axios from 'axios';
 import { useSelector } from "react-redux";
-import LikeButton from "../BasicComponent/LikeButton.jsx";
+import { useForm } from 'react-hook-form'
+import Comment from '../commentCard/Comment'
+
 
 function Blogs() {
     const [blogOwner, setBlogOwner] = useState(false);
     const currentUser = useSelector((state)=> state.user.user) ;
     const {blogId , authorId} = useParams();
     const [loading, setLoading] = useState(false);
+    const [commentLoading, setCommentLoading] = useState(false);
     const [isFollowing , setIsFollowing] = useState(false); // if i follow the user 
     const [isFollowed, setIsFollowed] = useState(false);  // if user follow me 
     const [followers, setFollowers] = useState(0);
@@ -21,6 +26,9 @@ function Blogs() {
     const [liked, setLiked] = useState(false);
     const [isBlogSaved, setIsBlogedSaved] = useState(false);
     const [commentVisible , SetCommentVisible] = useState(false);
+    const [blogComments, setBlogComments] = useState([]);
+
+    const {register, handleSubmit, reset, formState: {errors}} = useForm();
 
     useEffect(()=>{
         const getUserFollowings = async() => {
@@ -61,7 +69,7 @@ function Blogs() {
     },[blogId])
 
     useEffect(()=>{
-        if(currentUser._id === authorId){
+        if(currentUser?._id === authorId){
             setBlogOwner(true)
         }
     },[authorId, currentUser])
@@ -76,7 +84,7 @@ function Blogs() {
                 setIsFollowing(false);
             }
         } catch (error) {
-            setErrorMessage(error.response.data)
+            error.status === 401 ? setErrorMessage("You are not authorized to perform this action or perform this task !! please login .. ") : setErrorMessage(error.response.data)
         }finally{
             setLoading(false);
             if(btnClicked === true){
@@ -91,6 +99,20 @@ function Blogs() {
         navigate(`/userProfile/${authorId}`)
     }
 
+    const addCommentHandler = async(data) => {
+        setLoading(true);
+        try {
+            const response = await axios.post(`/api/v1/comment/postComment/${blogId}`, data, {withCredentials: true});
+            setBlogComments((prev)=> [response.data.data , ...prev])
+            console.log("comment added!!")
+        } catch (error) {
+            error.status === 401 ? setErrorMessage("You are not authorized to perform this action or perform this task !! please login .. ") : setErrorMessage(error.response.data) ;
+            console.log("error adding comment")
+        }finally{
+            setLoading(false)
+            reset();
+        }
+    }
     const likeToggleHandler = async() => {
 
     }
@@ -101,6 +123,24 @@ function Blogs() {
 
     const commentHandler = async() => {
         
+        const commentDiv = document.getElementById("commentDiv");
+        
+        const divClassList = commentDiv.classList ;
+        
+        if (  divClassList[0] === "hidden" ){
+            commentDiv.classList.remove("hidden");
+            setCommentLoading(true);
+            try {
+                const response = await axios.get(`/api/v1/comment/blogComments/${blogId}`, {withCredentials:true})
+                setBlogComments(response.data.data)
+            } catch (error) {
+                error.status === 401 ? setErrorMessage("You are not authorized to perform this action or perform this task !! please login .. ") : setErrorMessage(error.response.data) ;
+            }finally{
+                setCommentLoading(false);
+            }
+        }else{
+            commentDiv.classList.add("hidden");
+        }
     }
 
     const editHandler = async() => {
@@ -114,18 +154,18 @@ function Blogs() {
   return (
     <div>
       <div className='flex justify-between w-full mx-9 px-5'>
-        <h1 >BlogApp</h1>
+        <h1 className='text-[#207F87]'>BlogApp</h1>
         {blogOwner && 
         <div className='flex gap-3'>
-            <button onClick={editHandler} className='px-3 py-2 rounded-lg text-black'>Edit</button>
-            <button onClick={deleteHandler} className='px-3 py-2 rounded-lg text-white'>Delete</button>
+            <button onClick={editHandler} className='px-3 py-2 rounded-lg bg-green-600 text-black'>Edit</button>
+            <button onClick={deleteHandler} className='px-3 py-2 rounded-lg bg-red-500 text-white'>Delete</button>
         </div>}
       </div>
       <div>
         <div className='flex flex-col items-center my-3'>
             <h1 className='text-black text-[30px] font-semibold'>{blog.title}</h1>
             <div>
-                <img src={blog?.coverImage} className='rounded-2xl' alt="coverImage" />
+                <img src={blog?.coverImage} className='rounded-2xl h-[300px]' alt="coverImage" />
             </div>
             <div className='p-5 mt-2'>
                 {blog?.content}
@@ -134,20 +174,22 @@ function Blogs() {
 
         <div className='mx-4 px-3 my-2 flex justify-around'>
             <div>
-                <button onClick={likeToggleHandler} className='mb-2 w-[40px] h-[40px]'>
-                <LikeButton
-                  fill={liked ? "#ff0000" : "#ffffff"}
-                  onClick={() => setLiked(!liked)}
-                />
+                <button onClick={likeToggleHandler} className='mb-2  w-[40px] h-[40px]'>
+                  {liked ? <img src={likedPng} /> : <img src={unLikedPng}/>}
                 </button>
                 <h1>{likesCount}</h1>
+                
             </div>
             <div>
-                <button onClick={saveBlogHandler} className='mb-2 w-[40px] h-[40px]'></button>
+                <button onClick={saveBlogHandler} className='mb-2 w-[40px] h-[40px]'>
+                    <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M17 3H7C5.9 3 5 3.9 5 5v14c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V7l-4-4zM12 19c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm2-9H8V5h6v5z" fill="black" />
+                    </svg>
+                </button>
                 <h1>Save</h1>
             </div>
             <div>
-                <button onClick={commentHandler} className='mb-2 w-[40px] h-[40px]'></button>
+                <button onClick={commentHandler} className='mb-2 w-[40px] h-[40px]'><svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"> <path d="M21 2H3c-1.1 0-2 .9-2 2v18l4-4h16c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM3 16v-2h16v2H3zm0-4V8h16v4H3zM3 6V4h16v2H3z" stroke="black" fill="none"/> </svg></button>
                 <h1>Comments</h1>
             </div>
         </div>
@@ -190,10 +232,25 @@ function Blogs() {
             </div>
         </div>
 
-        <div>
-            
+        <div className='hidden' id='commentDiv'>
+            <form onSubmit={handleSubmit(addCommentHandler)} className='flex relative px-11 mt-4' >
+               <div className="h-full flex items-center">
+                   {blog?.author?.profilePic?.length > 0 ? <img src={blog?.author?.profilePic}  className="w-[40px] h-[40px] rounded-full" /> : <img src={defaultProfilePicture}  className="w-[40px] h-[40px] rounded-full" /> }
+               </div>
+               <input type="text" placeholder='Enter your comment..' className=' bg-transparent flex-1 focus:outline-none border-b-[2px] border-b-gray-700 px-4 my-4 placeholder:text-gray-600' {...register("content", {required: "comment cannot be empty!!"})}/>
+               <button type='submit' className='bg-[#207F87] px-3 py-1 h-[40px] absolute bottom-4 right-11 rounded-lg text-white'>POST</button>
+            </form>
+            {errors.content && <p className='w-full flex justify-center text-red-600'>{errors.content.message}</p>}
+            <div className='flex flex-col items-center mt-2'>
+                {blogComments.map((comment)=> (
+                    <div key={comment?._id}>
+                        <Comment userImage={comment?.user?.profilePic} userId={comment?.user?._id} username={comment?.user?.username} authorId={authorId} commentId={comment?._id} content={comment?.content}/>
+                    </div>
+                ))}
+            </div>
         </div>
       </div>
+      {errorMessage && <div className="text-red-600 w-full flex justify-center text-centre my-7" >{errorMessage}</div>} 
     </div>
   )
 }

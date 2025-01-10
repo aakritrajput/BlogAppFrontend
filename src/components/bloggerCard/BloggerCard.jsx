@@ -71,10 +71,9 @@ function BloggerCard({username, fullname, bio, userId, profilePic=""}) {
         <div className="h-full flex items-center">
             {profilePic.length > 0 ? <img src={profilePic}  className="w-[70px] h-[70px] rounded-full" /> : <img src={defaultProfilePicture}  className="w-[70px] h-[70px] rounded-full" /> }
         </div>
-        <div>
+        <div className=" flex flex-col items-start">
             <h1 className="text-lg font-bold mt-1">{fullname}</h1>
             <h3 className="text-md font-semibold">{username}</h3>
-            <p className="leading-none text-[black] mt-1">{bio}</p>
             <div className="flex gap-3 mt-1">
                 <p className="text-[#959595]">{`${followers} followers`}</p>
                 <p className="text-[#959595]">{`${following} following`}</p>
