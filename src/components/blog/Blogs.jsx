@@ -4,9 +4,10 @@ import defaultProfilePicture from "../../../public/defaultProfilePicture.jpeg"
 import likedPng from "../../../public/like-icon-vector-illustration.jpg"
 import unLikedPng from "../../../public/like-icon-vector-illustration (1).jpg"
 import axios from 'axios';
-import { useSelector } from "react-redux";
+import { useSelector ,useDispatch} from "react-redux";
 import { useForm } from 'react-hook-form'
-import Comment from '../commentCard/Comment'
+import Comment from '../commentCard/Comment.jsx'
+import { setUser, unsetUser } from "../store/userSlice.js"
 
 
 function Blogs() {
@@ -27,8 +28,23 @@ function Blogs() {
     const [isBlogSaved, setIsBlogedSaved] = useState(false);
     const [commentVisible , SetCommentVisible] = useState(false);
     const [blogComments, setBlogComments] = useState([]);
+    const dispatch = useDispatch();
 
     const {register, handleSubmit, reset, formState: {errors}} = useForm();
+
+    useEffect(() => {
+        const checkLogin = async () => {
+            try {
+                const response = await axios.get('/api/v1/user/profile', { withCredentials: true });
+                dispatch(setUser(response.data.data))
+            } catch (error) {
+                dispatch(unsetUser());
+                console.log(error.status)
+            }
+        };
+    
+        checkLogin(); 
+    }, [dispatch]);
 
     useEffect(()=>{
         const getUserFollowings = async() => {
@@ -104,7 +120,7 @@ function Blogs() {
         try {
             const response = await axios.post(`/api/v1/comment/postComment/${blogId}`, data, {withCredentials: true});
             setBlogComments((prev)=> [response.data.data , ...prev])
-            console.log("comment added!!")
+            console.log("comment added!!", response.data.data)
         } catch (error) {
             error.status === 401 ? setErrorMessage("You are not authorized to perform this action or perform this task !! please login .. ") : setErrorMessage(error.response.data) ;
             console.log("error adding comment")
@@ -133,6 +149,7 @@ function Blogs() {
             try {
                 const response = await axios.get(`/api/v1/comment/blogComments/${blogId}`, {withCredentials:true})
                 setBlogComments(response.data.data)
+                console.log("comment data received from backend !!", response)
             } catch (error) {
                 error.status === 401 ? setErrorMessage("You are not authorized to perform this action or perform this task !! please login .. ") : setErrorMessage(error.response.data) ;
             }finally{
@@ -241,7 +258,7 @@ function Blogs() {
                <button type='submit' className='bg-[#207F87] px-3 py-1 h-[40px] absolute bottom-4 right-11 rounded-lg text-white'>POST</button>
             </form>
             {errors.content && <p className='w-full flex justify-center text-red-600'>{errors.content.message}</p>}
-            <div className='flex flex-col items-center mt-2'>
+            <div className='flex flex-col items-center gap-2 mt-2'>
                 {blogComments.map((comment)=> (
                     <div key={comment?._id}>
                         <Comment userImage={comment?.user?.profilePic} userId={comment?.user?._id} username={comment?.user?.username} authorId={authorId} commentId={comment?._id} content={comment?.content}/>
