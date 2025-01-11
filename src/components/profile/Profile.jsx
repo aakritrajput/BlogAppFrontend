@@ -9,7 +9,7 @@ function Profile() {
     const [profileOwner, setProfileOwner] = useState(false);
     const {userId} = useParams();
     const currentUser = useSelector((state)=> state.user.user) ;
-    console.log("currentUser: ", currentUser)
+    //console.log("currentUser: ", currentUser)
     const [content, setContent] = useState([]); 
     const [profile, setProfile] = useState({});
     const [loading, setLoading] = useState(false);
@@ -115,6 +115,7 @@ function Profile() {
       try {
         const contentResponse = await axios.get(`/api/v1/like/usersLikedBlogs`, {withCredentials: true});
         setContent(contentResponse.data.data);
+        //console.log("liked blogs:",contentResponse.data.data)
       } catch (error) {
         error.status === 401 ? setErrorMessage("You are not authorized to perform this action or perform this task !! please login .. ") : setErrorMessage(error.response.data)
       }finally{
@@ -130,15 +131,21 @@ function Profile() {
       setIsLikedBlogs(false);
       try {
         const contentResponse = await axios.get(`/api/v1/user/savedBlogs`, {withCredentials: true});
-        setContent(contentResponse.data.data);
+        if(contentResponse?.data?.data[0]?.savedBlogs?.length > 0){
+          setContent(contentResponse.data.data[0].savedBlogs );
+          console.log("content saved ", contentResponse.data.data[0].savedBlogs)
+        }else{
+          setContent([]);
+          console.log("no content saved !")
+        }
+        //console.log("savedBlogs:",contentResponse.data.data[0].savedBlogs )
       } catch (error) {
-        error.status === 401 ? setErrorMessage("You are not authorized to perform this action or perform this task !! please login .. ") : setErrorMessage(error.response.data)
+        error.status === 401 ? setErrorMessage("You are not authorized to perform this action or perform this task !! please login .. ") : setErrorMessage(error.response?.data)
       }finally{
         setLoading(false);
       }
     }
-    
-
+    console.log('content', content)
   return (
     <div className='min-h-[100vh] relative '>
       {loading && 
@@ -152,7 +159,7 @@ function Profile() {
         <div className=' border-t-[4px] border-t-[#207F87] flex gap-7  px-[50px] py-4'>
             <div className='flex gap-5 pl-[50px] '>
                 <div>
-                   { profile?.profilePic?.length > 0 ? <img src={profile?.profilePic}  className='w-[170px]  top-[-30px] h-[170px] rounded-full'/> : <img src={defaultProfilePicture} className='w-[150px] h-[150px]   rounded-full'/>}
+                   { profile?.profilePic?.length > 0 ? <img src={profile?.profilePic}  className='w-[170px] object-cover flex-shrink-0 top-[-30px] h-[170px] rounded-full'/> : <img src={defaultProfilePicture} className='w-[150px] h-[150px]   rounded-full'/>}
                 </div>
                 <div className='py-3 flex flex-col justify-between items-center gap-1'>
                     <div>
@@ -209,7 +216,7 @@ function Profile() {
         <div className="px-[40px] grid grid-cols-4 gap-5 gap-y-11 border-t-2 border-t-gray-600 pt-3">
                 {content.map((blog)=>(
                   <div key={blog._id} className="flex justify-center ">
-                    <BlogCard coverImage={blog.coverImage} title={blog.title} content={blog.content} authorImage={blog.author.profilePic} authorName={blog.author.username} blogId={blog._id} authorId={blog.author._id}/>
+                    <BlogCard coverImage={blog?.coverImage} title={blog?.title} content={blog?.content} authorImage={blog?.author?.profilePic} authorName={blog?.author?.username} blogId={blog?._id} authorId={blog?.author?._id}/>
                   </div>
                 ))}
         </div>

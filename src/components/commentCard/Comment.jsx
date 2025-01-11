@@ -94,7 +94,7 @@ function Comment({userImage, userId , username , authorId ,  commentId, content}
         )}
       <div className='flex gap-2'>
         <div className="flex justify-center items-center px-2">
-        {userImage?.length > 0 ? <img src={userImage} className="w-[40px] h-[40px] rounded-full"/> : <img src={defaultProfilePicture} className="w-[40px] h-[40px] rounded-full"/>}
+        {userImage?.length > 0 ? <img src={userImage} className="w-[40px] h-[40px] object-cover rounded-full"/> : <img src={defaultProfilePicture} className="w-[40px] h-[40px] rounded-full"/>}
         </div>
         <div>
             <div className="mx-2">

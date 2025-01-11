@@ -10,6 +10,7 @@ import Comment from '../commentCard/Comment.jsx'
 import { setUser, unsetUser } from "../store/userSlice.js"
 
 
+
 function Blogs() {
     const [blogOwner, setBlogOwner] = useState(false);
     const currentUser = useSelector((state)=> state.user.user) ;
@@ -73,8 +74,14 @@ function Blogs() {
             setLoading(true);
             try {
                 const response = await axios.get(`/api/v1/blog/blogById/${blogId}`, {withCredentials: true})
+                const likestatus = await axios.get(`/api/v1/like/isBlogLiked/${blogId}`, {withCredentials: true}) 
+                const likeCountResponse = await axios.get(`/api/v1/like/blogLikesCount/${blogId}`, {withCredentials:true})
+                const isBlogSaved = await axios.get(`/api/v1/blog/isBlogSaved/${blogId}`, {withCredentials: true})
                 setBlog(response.data.data)
-                console.log("fetched Blog successfully :", response)
+                setLiked(likestatus.data.data.isLiked);
+                setLikesCount(likeCountResponse.data.data.likes);
+                setIsBlogedSaved(isBlogSaved.data.data.isSaved);
+                //console.log("fetched Blog successfully :", response)
             } catch (error) {
                 error.status === 401 ? setErrorMessage("You are not authorized to perform this action or perform this task !! please login .. ") : setErrorMessage(error.response.data)
             }finally{
@@ -130,11 +137,38 @@ function Blogs() {
         }
     }
     const likeToggleHandler = async() => {
-
+        setLoading(true);
+        try {
+            console.log("liketoggle try runs!!");
+            const response = await axios.patch(`/api/v1/like/toggleBlogLike/${blogId}`, {withCredentials:true})
+            const likeCountResponse = await axios.get(`/api/v1/like/blogLikesCount/${blogId}`, {withCredentials:true})
+            setLiked(response.data.data.like);
+            setLikesCount(likeCountResponse.data.data.likes);
+        } catch (error) {
+            console.log(error)
+            error.status === 401 ? setErrorMessage("You are not authorized to perform this action or perform this task !! please login .. ") : setErrorMessage(error.response.data)
+        }finally{
+            setLoading(false)
+        }
     }
 
     const saveBlogHandler = async() => {
-        
+        setLoading(true);
+        try {
+            if(isBlogSaved === false){
+              await axios.patch(`/api/v1/blog/saveBlog/${blogId}`, {withCredentials:true})
+              setIsBlogedSaved(true);
+              console.log("blog saved successfully !!")
+            }else{
+                await axios.patch(`/api/v1/user/removeFromSavedBlogs/${blogId}`, {withCredentials:true})
+                setIsBlogedSaved(false);
+                console.log("blog unsaved successfully !!")
+            }
+        } catch (error) {
+            error.status === 401 ? setErrorMessage("You are not authorized to perform this action or perform this task !! please login .. ") : setErrorMessage(error.response.data)
+        }finally{
+            setLoading(false);
+        }
     }
 
     const commentHandler = async() => {
@@ -145,6 +179,7 @@ function Blogs() {
         
         if (  divClassList[0] === "hidden" ){
             commentDiv.classList.remove("hidden");
+            SetCommentVisible(true);
             setCommentLoading(true);
             try {
                 const response = await axios.get(`/api/v1/comment/blogComments/${blogId}`, {withCredentials:true})
@@ -157,6 +192,7 @@ function Blogs() {
             }
         }else{
             commentDiv.classList.add("hidden");
+            SetCommentVisible(false);
         }
     }
 
@@ -165,13 +201,21 @@ function Blogs() {
     }
 
     const deleteHandler = async() => {
-        
+        setLoading(true);
+        try {
+            await axios.delete(`/api/v1/blog/deleteBlog/${blogId}`, {withCredentials: true})
+            setLoading(false);
+            navigate("/")
+        } catch (error) {
+            setLoading(false);
+            alert(error.status === 401 ? "You are not authorized to perform this action or perform this task !! please login .. " : error.response.data )
+        }
     }
 
   return (
-    <div>
-      <div className='flex justify-between w-full mx-9 px-5'>
-        <h1 className='text-[#207F87]'>BlogApp</h1>
+    <div className='relative'>
+      <div className='flex my-2 justify-between  mx-9 px-5'>
+        <h1 className='text-[#207F87] text-3xl font-bold'>BlogApp</h1>
         {blogOwner && 
         <div className='flex gap-3'>
             <button onClick={editHandler} className='px-3 py-2 rounded-lg bg-green-600 text-black'>Edit</button>
@@ -180,39 +224,48 @@ function Blogs() {
       </div>
       <div>
         <div className='flex flex-col items-center my-3'>
-            <h1 className='text-black text-[30px] font-semibold'>{blog.title}</h1>
+            <h1 className='text-black text-[30px] mb-2 font-semibold'>{blog.title}</h1>
             <div>
-                <img src={blog?.coverImage} className='rounded-2xl h-[300px]' alt="coverImage" />
+                <img src={blog?.coverImage} className='rounded-2xl border-2 border-spacing-1 border-[#207F87] h-[300px]' alt="coverImage" />
             </div>
-            <div className='p-5 mt-2'>
+            <div className='p-5 px-11 m-8 border-b-4 border-b-[#207F87] mt-2'>
                 {blog?.content}
             </div>
         </div>
 
-        <div className='mx-4 px-3 my-2 flex justify-around'>
-            <div>
-                <button onClick={likeToggleHandler} className='mb-2  w-[40px] h-[40px]'>
+        <div className='m-5 px-3 mb-5 flex border-2 border-[gray] rounded-3xl p-3 justify-around'>
+            <div >
+                <button onClick={likeToggleHandler} className='mb-2 bg-green-400  w-[40px] h-[40px]'>
                   {liked ? <img src={likedPng} /> : <img src={unLikedPng}/>}
                 </button>
-                <h1>{likesCount}</h1>
+                <h1 className='w-full flex justify-center'>{likesCount}</h1>
                 
             </div>
-            <div>
-                <button onClick={saveBlogHandler} className='mb-2 w-[40px] h-[40px]'>
-                    <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <div >
+                <button onClick={saveBlogHandler} className='mb-2 w-[40px] flex justify-center  h-[40px]'>
+                    {isBlogSaved ? 
+                    <svg width="40" height="40" viewBox="0 0 24 24" stroke='black' xmlns="http://www.w3.org/2000/svg">
                         <path d="M17 3H7C5.9 3 5 3.9 5 5v14c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V7l-4-4zM12 19c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm2-9H8V5h6v5z" fill="black" />
-                    </svg>
+                    </svg> :
+                    <svg width="40" height="40" viewBox="0 0 24 24" stroke='black' xmlns="http://www.w3.org/2000/svg">
+                        <path d="M17 3H7C5.9 3 5 3.9 5 5v14c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V7l-4-4zM12 19c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm2-9H8V5h6v5z" fill="none" />
+                    </svg> 
+                    }
                 </button>
-                <h1>Save</h1>
+                <h1 className='w-full flex justify-center'>{isBlogSaved ? "Saved" : "save"}</h1>
             </div>
-            <div>
-                <button onClick={commentHandler} className='mb-2 w-[40px] h-[40px]'><svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"> <path d="M21 2H3c-1.1 0-2 .9-2 2v18l4-4h16c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM3 16v-2h16v2H3zm0-4V8h16v4H3zM3 6V4h16v2H3z" stroke="black" fill="none"/> </svg></button>
+            <div className= 'flex flex-col items-center'>
+                { commentVisible ?
+                    <button onClick={commentHandler} className='mb-2 w-[40px] flex justify-center h-[40px]'><svg width="35" height="35" viewBox="0 0 24 24"  xmlns="http://www.w3.org/2000/svg"> <path d="M21 2H3c-1.1 0-2 .9-2 2v18l4-4h16c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM3 16v-2h16v2H3zm0-4V8h16v4H3zM3 6V4h16v2H3z" stroke="black" fill="black"/> </svg></button>
+                    :
+                    <button onClick={commentHandler} className='mb-2 w-[40px] flex justify-center h-[40px]'><svg width="35" height="35" viewBox="0 0 24 24"  xmlns="http://www.w3.org/2000/svg"> <path d="M21 2H3c-1.1 0-2 .9-2 2v18l4-4h16c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM3 16v-2h16v2H3zm0-4V8h16v4H3zM3 6V4h16v2H3z" stroke="black" fill="none"/> </svg></button>
+                }
                 <h1>Comments</h1>
             </div>
         </div>
 
-        <div className='flex justify-between mx-3 px-2'>
-            <div >
+        <div className='flex justify-between mx-3 bg-[#3e3d3d51] rounded-lg p-3 mb-7 px-2'>
+            <div className='ml-4 flex flex-col justify-center'>
                 <button
                 className="w-full h-[40px] relative mb-2"
                 disabled={loading}
@@ -233,17 +286,17 @@ function Blogs() {
                       </div>
                     )}
                 </button>
-                {isFollowed && <p className="text-[#207F87]"> Follows you </p>}
+                {isFollowed && <p className="text-[#207F87] w-full justify-center flex"> Follows you </p>}
             </div>
-            <div className='flex gap-3'>
-                <h1>Author: </h1>
+            <div className='flex mx-4 gap-3'>
+                <h1 className='h-full flex items-center text-2xl font-semibold'>Author: </h1>
                 <button className="w-75% border-r-4 h-full pr-3 border-r-[#d3d2d2] flex gap-2" onClick={profileClickHandler}>
                     <div className="h-full flex items-center">
-                        {blog?.author?.profilePic?.length > 0 ? <img src={blog?.author?.profilePic}  className="w-[70px] h-[70px] rounded-full" /> : <img src={defaultProfilePicture}  className="w-[70px] h-[70px] rounded-full" /> }
+                        {blog?.author?.profilePic?.length > 0 ? <img src={blog?.author?.profilePic}  className="w-[70px] h-[70px] object-cover rounded-full" /> : <img src={defaultProfilePicture}  className="w-[70px] h-[70px] rounded-full" /> }
                     </div>
                     <div>
                         <h1 className="text-xl text-black font-bold">{blog?.author?.username}</h1>
-                        <p className="text-[#959595]">{`${followers} followers`}</p>
+                        <p className="text-[#444444]">{`${followers} followers`}</p>
                     </div>
                 </button>
             </div>
@@ -252,21 +305,35 @@ function Blogs() {
         <div className='hidden' id='commentDiv'>
             <form onSubmit={handleSubmit(addCommentHandler)} className='flex relative px-11 mt-4' >
                <div className="h-full flex items-center">
-                   {blog?.author?.profilePic?.length > 0 ? <img src={blog?.author?.profilePic}  className="w-[40px] h-[40px] rounded-full" /> : <img src={defaultProfilePicture}  className="w-[40px] h-[40px] rounded-full" /> }
+                   {currentUser?.profilePic?.length > 0 ? <img src={currentUser?.profilePic}  className="w-[40px] h-[40px] rounded-full" /> : <img src={defaultProfilePicture}  className="w-[40px] h-[40px] rounded-full" /> }
                </div>
                <input type="text" placeholder='Enter your comment..' className=' bg-transparent flex-1 focus:outline-none border-b-[2px] border-b-gray-700 px-4 my-4 placeholder:text-gray-600' {...register("content", {required: "comment cannot be empty!!"})}/>
                <button type='submit' className='bg-[#207F87] px-3 py-1 h-[40px] absolute bottom-4 right-11 rounded-lg text-white'>POST</button>
             </form>
             {errors.content && <p className='w-full flex justify-center text-red-600'>{errors.content.message}</p>}
-            <div className='flex flex-col items-center gap-2 mt-2'>
-                {blogComments.map((comment)=> (
+            <div className='flex flex-col mb-11 items-center gap-2 mt-2'>
+                { blogComments.length > 0 ? 
+                blogComments.map((comment)=> (
                     <div key={comment?._id}>
                         <Comment userImage={comment?.user?.profilePic} userId={comment?.user?._id} username={comment?.user?.username} authorId={authorId} commentId={comment?._id} content={comment?.content}/>
                     </div>
-                ))}
+                ))
+                :
+                <h1 className='w-full flex justify-center text-gray-800'>No comments...</h1>
+            }
+                {commentLoading && 
+                <div className="w-full h-[30px]  flex justify-center items-center my-7">
+                    <div className="animate-spin rounded-full h-[30px] w-[30px] border-t-[5px] border-[#207F87]"></div>
+                </div>}
+      
+                
             </div>
         </div>
       </div>
+      {loading && 
+        <div className="w-full h-[100vw]  flex justify-center z-20 absolute items-center my-7">
+            <div className="animate-spin rounded-full h-[30px] w-[30px] border-t-[5px] border-[#207F87]"></div>
+        </div>}
       {errorMessage && <div className="text-red-600 w-full flex justify-center text-centre my-7" >{errorMessage}</div>} 
     </div>
   )

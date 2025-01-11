@@ -10,7 +10,7 @@ import defaultProfilePicture from "../../../public/defaultProfilePicture.jpeg"
 function BlogCard({coverImage , title, content , authorImage="", authorName, blogId, authorId}) {
   const [loggedIn, setLoggedIn] = useState(false)
   const maxLength = 50 ;
-  const previewContent = content.length > maxLength ? content.slice(0, maxLength) + "..." : content ;
+  const previewContent = content?.length > maxLength ? content.slice(0, maxLength) + "..." : content ;
   const navigate = useNavigate();
   const user = useSelector((state) => state.user.user);
   //console.log(`user in redux store is`, user)
@@ -53,7 +53,7 @@ function BlogCard({coverImage , title, content , authorImage="", authorName, blo
         </div>
         <div className="flex flex-col justify-center items-center">
           <button onClick={authorProfileHandler} className="bg-transparent flex flex-col justify-center items-center border-none">
-            {authorImage.length > 0 ? <img src={authorImage} className="w-[40px] h-[40px] rounded-full" alt="" /> : <img src={defaultProfilePicture} className="w-[40px] h-[40px] rounded-full" />}
+            {authorImage?.length > 0 ? <img src={authorImage} className="w-[40px] object-cover h-[40px] rounded-full" alt="" /> : <img src={defaultProfilePicture} className="w-[40px] h-[40px] rounded-full" />}
             <p>{authorName}</p>
           </button>
         </div>

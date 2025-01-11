@@ -7,7 +7,7 @@ import defaultProfilePicture from "../../../public/defaultProfilePicture.jpeg"
 import { useNavigate } from "react-router-dom";
 
 
-function BloggerCard({username, fullname, bio, userId, profilePic=""}) {
+function BloggerCard({username, fullname,  userId, profilePic=""}) {
     const [loading, setLoading] = useState(false)
     const [isFollowing , setIsFollowing] = useState(false); // if i follow the user 
     const [isFollowed, setIsFollowed] = useState(false);  // if user follow me 
@@ -69,7 +69,7 @@ function BloggerCard({username, fullname, bio, userId, profilePic=""}) {
     <div className="bg-white flex gap-2 rounded-xl justify-between p-3">
       <button className="w-75% border-r-4 h-full pr-3 border-r-[#d3d2d2] flex gap-3" onClick={profileClickHandler}>
         <div className="h-full flex items-center">
-            {profilePic.length > 0 ? <img src={profilePic}  className="w-[70px] h-[70px] rounded-full" /> : <img src={defaultProfilePicture}  className="w-[70px] h-[70px] rounded-full" /> }
+            {profilePic.length > 0 ? <img src={profilePic}  className="w-[70px] h-[70px] object-cover rounded-full" /> : <img src={defaultProfilePicture}  className="w-[70px] h-[70px]  rounded-full" /> }
         </div>
         <div className=" flex flex-col items-start">
             <h1 className="text-lg font-bold mt-1">{fullname}</h1>
@@ -112,7 +112,6 @@ function BloggerCard({username, fullname, bio, userId, profilePic=""}) {
 BloggerCard.propTypes = {
     username: PropTypes.string.isRequired,
     fullname: PropTypes.string.isRequired,
-    bio: PropTypes.string.isRequired,
     userId: PropTypes.string.isRequired,
     profilePic: PropTypes.string.isRequired
 }
