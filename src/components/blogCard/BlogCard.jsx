@@ -48,7 +48,7 @@ function BlogCard({coverImage , title, content , authorImage="", authorName, blo
       </div>
       <div className="p-2 flex gap-2">
         <div >
-          <h1 className="text-black font-semibold">{title}</h1>
+          <h1 className="text-black leading-tight font-semibold">{title}</h1>
           <p className="text-[#413E3E] flex flex-wrap leading-none ">{previewContent} <button onClick={readMoreHandler} className="bg-transparent hover:text-[#e4ac69] border-none text-[#f19b32]"><u>read more</u></button></p>
         </div>
         <div className="flex flex-col justify-center items-center">

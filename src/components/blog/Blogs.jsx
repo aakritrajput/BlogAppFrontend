@@ -30,6 +30,7 @@ function Blogs() {
     const [commentVisible , SetCommentVisible] = useState(false);
     const [blogComments, setBlogComments] = useState([]);
     const dispatch = useDispatch();
+    const [FollowLoading , setFollowLoading ] = useState(false);
 
     const {register, handleSubmit, reset, formState: {errors}} = useForm();
 
@@ -98,7 +99,7 @@ function Blogs() {
     },[authorId, currentUser])
 
     const toggleHandler = async() => {
-        setLoading(true)
+        setFollowLoading(true)
         try {
             const response = await axios.patch(`/api/v1/followings/toggleFollow/${authorId}`, {withCredentials: true})
             if(response.data.data.Following === true){
@@ -109,7 +110,7 @@ function Blogs() {
         } catch (error) {
             error.status === 401 ? setErrorMessage("You are not authorized to perform this action or perform this task !! please login .. ") : setErrorMessage(error.response.data)
         }finally{
-            setLoading(false);
+            setFollowLoading(false);
             if(btnClicked === true){
                 setBtnClicked(false);
             }else{
@@ -123,7 +124,7 @@ function Blogs() {
     }
 
     const addCommentHandler = async(data) => {
-        setLoading(true);
+        setCommentLoading(true);
         try {
             const response = await axios.post(`/api/v1/comment/postComment/${blogId}`, data, {withCredentials: true});
             setBlogComments((prev)=> [response.data.data , ...prev])
@@ -132,12 +133,11 @@ function Blogs() {
             error.status === 401 ? setErrorMessage("You are not authorized to perform this action or perform this task !! please login .. ") : setErrorMessage(error.response.data) ;
             console.log("error adding comment")
         }finally{
-            setLoading(false)
+            setCommentLoading(false)
             reset();
         }
     }
     const likeToggleHandler = async() => {
-        setLoading(true);
         try {
             console.log("liketoggle try runs!!");
             const response = await axios.patch(`/api/v1/like/toggleBlogLike/${blogId}`, {withCredentials:true})
@@ -147,8 +147,6 @@ function Blogs() {
         } catch (error) {
             console.log(error)
             error.status === 401 ? setErrorMessage("You are not authorized to perform this action or perform this task !! please login .. ") : setErrorMessage(error.response.data)
-        }finally{
-            setLoading(false)
         }
     }
 
@@ -214,6 +212,10 @@ function Blogs() {
 
   return (
     <div className='relative'>
+        {loading && 
+        <div className="w-[100vw] h-full absolute flex justify-center items-center bg-[#000000c8]">
+            <div className="animate-spin rounded-full h-[10vw] w-[10vw] border-t-[10px] border-[#207F87]"></div>
+        </div>}
       <div className='flex my-2 justify-between  mx-9 px-5'>
         <h1 className='text-[#207F87] text-3xl font-bold'>BlogApp</h1>
         {blogOwner && 
@@ -280,7 +282,7 @@ function Blogs() {
                         Follow
                       </div>
                     )}
-                    {loading && (
+                    {FollowLoading && (
                       <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center bg-opacity-10 bg-black z-20">
                         <div className="animate-spin rounded-full h-[25px] w-[25px] border-t-[5px] border-[#24393b]"></div>
                       </div>
