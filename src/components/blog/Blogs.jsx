@@ -197,7 +197,7 @@ function Blogs() {
     }
 
     const editHandler = async() => {
-        
+        navigate(`/editBlog/${blogId}`)
     }
 
     const deleteHandler = async() => {

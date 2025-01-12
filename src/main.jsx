@@ -16,6 +16,8 @@ import Search from './components/search/Search.jsx'
 import Profile from './components/profile/Profile.jsx'
 import EditProfile from './components/profile/EditProfile.jsx'
 import Blogs from './components/blog/Blogs.jsx'
+import EditBlog from './components/blog/editBlog.jsx'
+
 
 const router = createBrowserRouter([
   {
@@ -63,6 +65,10 @@ const router = createBrowserRouter([
   {
     path: "/blog/:blogId/:authorId",
     element: <Blogs/>
+  },
+  {
+    path: "/editBlog/:blogId",
+    element: <EditBlog/>
   }
 ])
 

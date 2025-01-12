@@ -213,7 +213,7 @@ function Profile() {
             <button onClick={savedBlogsHandler}>{ isSavedBlogs ? <h1 className='text-[#207F87] text-xl'>Saved Blogs</h1> : <h1 className='text-[#738586] text-xl'>Saved Blogs</h1> }</button>
             <button onClick={likedBlogsHandler}>{ isLikedBlogs ? <h1 className='text-[#207F87] text-xl'>Liked Blogs</h1> : <h1 className='text-[#738586] text-xl'>Liked Blogs</h1> }</button>
           </div>}
-        <div className="px-[40px] grid grid-cols-4 gap-5 gap-y-11 border-t-2 border-t-gray-600 pt-3">
+        <div className="px-[40px] grid grid-cols-4 gap-5 gap-y-11 mb-7 border-t-2 border-t-gray-600 pt-3">
                 {content.map((blog)=>(
                   <div key={blog._id} className="flex justify-center ">
                     <BlogCard coverImage={blog?.coverImage} title={blog?.title} content={blog?.content} authorImage={blog?.author?.profilePic} authorName={blog?.author?.username} blogId={blog?._id} authorId={blog?.author?._id}/>
