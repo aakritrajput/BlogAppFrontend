@@ -17,6 +17,8 @@ import Profile from './components/profile/Profile.jsx'
 import EditProfile from './components/profile/EditProfile.jsx'
 import Blogs from './components/blog/Blogs.jsx'
 import EditBlog from './components/blog/editBlog.jsx'
+import Follower from './components/followings/Follower.jsx'
+import Following from './components/followings/Following.jsx'
 
 
 const router = createBrowserRouter([
@@ -69,6 +71,14 @@ const router = createBrowserRouter([
   {
     path: "/editBlog/:blogId",
     element: <EditBlog/>
+  },
+  {
+    path: "/userFollowers/:bloggerId",
+    element: <Follower/>
+  },
+  {
+    path: "/userFollowings/:bloggerId",
+    element: <Following/>
   }
 ])
 

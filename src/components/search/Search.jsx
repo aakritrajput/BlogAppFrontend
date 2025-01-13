@@ -61,24 +61,24 @@ function Search() {
       },[loading, hasMore])
 
   return (
-    <div className="bg-[#DDDBDB] h-[100vh] max-w-[100vw]   py-4">
-      <form onSubmit={handleSubmitForm1(blogSearchHandler)}  className="w-full px-9 pt-3 h-[8vh] flex">
-        <input type="text" placeholder="Search Blogs" className="rounded-l-xl bg-[#9d9a9a] placeholder:text-gray-700 px-3 py-3 flex-1 focus:bg-[#bdbbbb] focus:outline-[#207F87]" {...registerForm1("query1", {required: "Search cannot be empty !!"})} />
-        <button type="submit" disabled={loading} onClick={()=>{setBlogSearch(true); setItems([]); setErrorMessage("") ; resetForm2(); errorsForm2.query1 = "";}} className="bg-[#207F87] text-white rounded-r-xl  px-3 py-3">Search Blogs</button>
+    <div className="bg-[#DDDBDB] h-[100vh] pb-[70px] py-4">
+      <form onSubmit={handleSubmitForm1(blogSearchHandler)}  className="w-full px-2 sm:px-3 md:px-9 pt-3 h-[8vh] flex">
+        <input type="text" placeholder="Search Blogs" className="rounded-l-xl bg-[#9d9a9a] placeholder:text-gray-700 text-[14px] sm:text-[16px] px-1 sm:px-3 py-3 flex-1 focus:bg-[#bdbbbb] focus:outline-[#207F87]" {...registerForm1("query1", {required: "Search cannot be empty !!"})} />
+        <button type="submit" disabled={loading} onClick={()=>{setBlogSearch(true); setItems([]); setErrorMessage("") ; resetForm2(); errorsForm2.query1 = "";}} className="bg-[#207F87] text-white rounded-r-xl text-[10px] sm:text-[14px] md:text-[20px] text-wrap flex leading-tight items-center px-2 md:px-3 py-3">Search Blogs</button>
       </form>
-      {errorsForm1.query1 && <p className="text-red-600 w-full text-center">{errorsForm1.query1.message}</p>}
+      {errorsForm1.query1 && <p className="text-red-600 w-full text-wrap text-center">{errorsForm1.query1.message}</p>}
 
-      <form onSubmit={handleSubmitForm2(bloggerSearchHandler)} className="w-full px-9 pt-3 h-[8vh] flex ">
-        <input type="text" placeholder="Search Bloggers" className="rounded-l-xl bg-[#9d9a9a] placeholder:text-gray-700 px-3 py-3 flex-1 focus:bg-[#bdbbbb] focus:outline-[#207F87]" {...registerForm2("query2", {required: "Search cannot be empty !!"})} />
-        <button type="submit" disabled={loading} onClick={()=>{setBlogSearch(false); setItems([]); setErrorMessage(""); resetForm1(); errorsForm1.query1 = "";}} className="bg-[#207F87] text-white rounded-r-xl px-3 py-3">Search Bloggers</button>
+      <form onSubmit={handleSubmitForm2(bloggerSearchHandler)} className="w-full px-2 sm:px-3 md:px-9 pt-3 h-[8vh] flex ">
+        <input type="text" placeholder="Search Bloggers" className="rounded-l-xl bg-[#9d9a9a] placeholder:text-gray-700 text-[14px] sm:text-[16px] px-1 sm:px-3 py-3 flex-1 focus:bg-[#bdbbbb] focus:outline-[#207F87]" {...registerForm2("query2", {required: "Search cannot be empty !!"})} />
+        <button type="submit" disabled={loading} onClick={()=>{setBlogSearch(false); setItems([]); setErrorMessage(""); resetForm1(); errorsForm1.query1 = "";}} className="bg-[#207F87] text-white rounded-r-xl text-[10px] sm:text-[14px] md:text-[20px] text-wrap flex leading-tight items-center px-2 md:px-3 py-3">Search Bloggers</button>
       </form>
-      {errorsForm2.query1 && <p className="text-red-600 w-full text-center">{errorsForm2.query1.message}</p>}
+      {errorsForm2.query1 && <p className="text-red-600 w-full text-wrap text-center">{errorsForm2.query1.message}</p>}
 
-      <div className="h-[70vh] overflow-y-auto py-5" onScroll={handleScroll} >
+      <div className="h-[70vh] overflow-y-auto mt-4 py-2 md:py-5" onScroll={handleScroll} >
 
       {items && items.length > 0 && blogSearch ? (
         <>
-           <div className="px-[40px] grid grid-cols-4 gap-5 gap-y-11 ">
+           <div className="sm:px-[40px] px-4 grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-1 sm:gap-5 gap-y-11 ">
              {items.map((blog) => (
                <div key={blog._id} className="flex justify-center">
                  <BlogCard
@@ -102,7 +102,7 @@ function Search() {
           </>
          ) : (
           <>
-           <div className="w-full  items-center flex flex-col gap-y-4 ">
+           <div className="w-full  items-center flex flex-col gap-y-2 sm:gap-y-4 ">
              {items &&
                items.length > 0 &&
                items.map((blogger) => (

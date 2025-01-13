@@ -53,8 +53,8 @@ function BlogCard({coverImage , title, content , authorImage="", authorName, blo
         </div>
         <div className="flex flex-col justify-center items-center">
           <button onClick={authorProfileHandler} className="bg-transparent flex flex-col justify-center items-center border-none">
-            {authorImage?.length > 0 ? <img src={authorImage} className="w-[40px] object-cover h-[40px] rounded-full" alt="" /> : <img src={defaultProfilePicture} className="w-[40px] h-[40px] rounded-full" />}
-            <p>{authorName}</p>
+            {authorImage?.length > 0 ? <img src={authorImage} className="w-[40px] min-w-[40px] object-cover h-[40px] rounded-full flex-shrink-0" alt="" /> : <img src={defaultProfilePicture} className="w-[40px] h-[40px] rounded-full" />}
+            <p className="sm:block hidden">{authorName}</p>
           </button>
         </div>
       </div>

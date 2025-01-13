@@ -29,14 +29,14 @@ function Register() {
         }
     }
   return (
-    <div className="w-full relative min-h-[100vh] bg-[#DDDBDB] flex md:flex-row flex-col gap-[40px] items-center justify-center ">
+    <div className="w-full relative min-h-[100vh] bg-[#DDDBDB] flex md:flex-row flex-col md:gap-[40px] gap-4 items-center justify-center ">
         {loading && 
         <div className="w-[100vw] h-[100vh] absolute flex justify-center items-center bg-[#000000c8]">
-            <div className="animate-spin rounded-full h-[10vw] w-[10vw] border-t-[10px] border-[#207F87]"></div>
+            <div className="animate-spin rounded-full h-[10vw] w-[10vw] md:border-t-[10px] border-t-[5px]  border-[#207F87]"></div>
         </div>}
-      <div className="block gap-2 p-5  w-[30vw]">
-        <h1 className="text-[#207F87] text-[80px] ml-2 font-bold">BlogApp</h1>
-        <p className="text-[#263D3F] text-[20px]">Welcome to <b>BlogApp</b>
+      <div className="block gap-2 md:p-5  md:w-[30vw]">
+        <h1 className="text-[#207F87] lg:text-[75px] md:text-[50px] text-[30px] md:ml-2 font-bold">BlogApp</h1>
+        <p className="text-[#263D3F] md:block hidden leading-tight text-[15px] lg:text-[20px]">Welcome to <b>BlogApp</b>
           <br />your gateway to creativity, connection, 
           <br />and inspiration! 🌟
           <br />Join our community of passionate 

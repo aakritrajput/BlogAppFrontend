@@ -65,6 +65,7 @@ function EditBlog() {
             <div className="animate-spin rounded-full h-[10vw] w-[10vw] border-t-[10px] border-[#207F87]"></div>
         </div>}
           <div>
+            <div className='w-full flex justify-center'>Edit Blog</div>
             <form onSubmit={handleSubmit(submitHandler)} encType="multipart/form-data">
                 <div className='flex gap-[20px] items-center mt-[20px] w-full'>
                     <label htmlFor="title" className='text-black text-xl font-semibold'>Title :</label>

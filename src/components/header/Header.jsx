@@ -4,6 +4,7 @@ import { useState, useEffect } from "react"
 import { NavLink, Link } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import { setUser, unsetUser } from "../store/userSlice.js"
+//import defaultProfilePicture from "../../../public/defaultProfilePicture.jpeg"
 
 function Header() {
     const [loggedIn, setLoggedIn] = useState(false)
@@ -46,10 +47,10 @@ function Header() {
     <div className="flex justify-between px-4  bg-[#DDDBDB]">
       <h1 className="text-[#207F87] text-3xl font-semibold py-3">BlogApp</h1>
       <div >
-        <ul className="flex list-none gap-5  h-full justify-center items-center">
+        <ul className="md:flex list-none gap-5 hidden h-full justify-center items-center">
             <li>
                 <NavLink to="/" className={({ isActive })=> `${isActive ? "text-[#207F87] text-[25px] after:scale-x-100" : "text-[#989494] text-[25px] hover:text-[#7a7777]"} 
-                relative after:absolute after:bottom-0 after:left-0 
+                relative after:absolute after:bottom-0  after:left-0 
                 after:w-full after:h-[2px] after:bg-[#207F87] 
                 after:scale-x-0 hover:after:scale-x-100 
                 transition-all duration-300 ease-in-out `}>
@@ -58,7 +59,7 @@ function Header() {
             </li>
             <li>
                 <NavLink to="/search" className={({ isActive })=> `${isActive ? "text-[#207F87] text-[25px] after:scale-x-100" : "text-[#989494] text-[25px] hover:text-[#7a7777]"} 
-                relative after:absolute after:bottom-0 after:left-0 
+                relative after:absolute after:bottom-0  after:left-0 
                 after:w-full after:h-[2px] after:bg-[#207F87] 
                 after:scale-x-0 hover:after:scale-x-100 
                 transition-all duration-1000 ease-linear `}>
@@ -73,10 +74,11 @@ function Header() {
                 transition-all duration-300 ease-in-out `}>
                     Create
                 </NavLink>
+
             </li>}
             {loggedIn && <li>
                 <NavLink to={`/userProfile/${user._id}`} className={({ isActive })=> `${isActive ? "text-[#207F87] text-[25px] after:scale-x-100" : "text-[#989494] text-[25px] hover:text-[#7a7777]"} 
-                relative after:absolute after:bottom-0 after:left-0 
+                relative after:absolute  after:bottom-0 after:left-0 
                 after:w-full after:h-[2px] after:bg-[#207F87] 
                 after:scale-x-0 hover:after:scale-x-100 
                 transition-all duration-300 ease-in-out `}>

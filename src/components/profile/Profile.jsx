@@ -145,7 +145,7 @@ function Profile() {
         setLoading(false);
       }
     }
-    console.log('content', content)
+    //console.log('content', content)
   return (
     <div className='min-h-[100vh] relative '>
       {loading && 

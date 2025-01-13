@@ -44,8 +44,8 @@ function Home() {
 
 
   return (
-    <div onScroll={handleScroll}  className="bg-[#DDDBDB] pt-8 w-[100vw] h-[90vh] overflow-y-auto ">
-      <div className="px-[40px] grid grid-cols-4 gap-5 gap-y-11">
+    <div onScroll={handleScroll}  className="bg-[#DDDBDB] pt-8 w-[100vw] pb-[70px] h-[90vh] overflow-y-auto ">
+      <div className="lg:px-[40px] px-4 grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-5 gap-y-11">
         {blogs.map((blog)=>(
           <div key={blog._id} className="flex justify-center ">
             <BlogCard coverImage={blog.coverImage} title={blog.title} content={blog.content} authorImage={blog.author?.profilePic} authorName={blog.author?.username} blogId={blog._id} authorId={blog.author?._id}/>
