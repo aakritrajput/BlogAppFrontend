@@ -156,18 +156,18 @@ function Profile() {
         <div className='w-full  h-[130px] relative'>
             {profile?.bannerPic?.length > 0 ? <img src={profile?.bannerPic} className='w-full h-full object-cover'/> : <div className='w-full h-full object-cover bg-[#364E4B]'></div>}
         </div>
-        <div className=' border-t-[4px] border-t-[#207F87] flex gap-7  px-[50px] py-4'>
-            <div className='flex gap-5 pl-[50px] '>
-                <div>
-                   { profile?.profilePic?.length > 0 ? <img src={profile?.profilePic}  className='w-[170px] object-cover flex-shrink-0 top-[-30px] h-[170px] rounded-full'/> : <img src={defaultProfilePicture} className='w-[150px] h-[150px]   rounded-full'/>}
+        <div className=' border-t-[4px] border-t-[#207F87] flex md:gap-7 gap-1 md:px-[50px] py-4'>
+            <div className='flex gap-2 md:gap-5 bg-green-600 pl-[10px]  md:pl-[50px] '>
+                <div className='flex-shrink-0  w-[100px] md:h-[170px]  md:w-[170px] h-[100px]'>
+                   { profile?.profilePic?.length > 0 ? <img src={profile?.profilePic}  className='md:w-[170px] w-[100px] h-[100px]  object-cover flex-shrink-0  md:h-[170px] rounded-full'/> : <img src={defaultProfilePicture} className='md:w-[170px] w-[100px] h-[100px]  object-cover flex-shrink-0  md:h-[170px] rounded-full'/>}
                 </div>
                 <div className='py-3 flex flex-col justify-between items-center gap-1'>
                     <div>
-                      <h1 className='font-bold text-lg pl-2 text-black'>{profile?.fullname}</h1>
-                      <h3 className='text-[#393939] font-semibold pl-2'>{profile?.username}</h3>
-                      <p className='text-[#323232] pl-2'>{profile?.bio}</p>
+                      <h1 className='font-bold md:text-lg text-[14px] pl-2 text-black'>{profile?.fullname}</h1>
+                      <h3 className='text-[#393939] font-semibold text-[12px] md:text-[14px] pl-2'>{profile?.username}</h3>
+                      <p className='text-[#323232] text-[12px] md:text-[14px] text-wrap leading-tight pl-2'>{profile?.bio}</p>
                     </div>
-                    {profileOwner ? <Link to="/editProfile" className='px-3.5 py-2.5 text-center w-full   rounded-md text-[White] bg-[#207F87]'>Edit Profile</Link>
+                    {profileOwner ? <Link to="/editProfile" className='md:px-3.5 md:py-2.5 text-center w-full text-[12px] md:text-[14px] p-[3px]  rounded-md text-[White] bg-[#207F87]'>Edit Profile</Link>
                     :
                     <>
                       <button
@@ -176,11 +176,11 @@ function Profile() {
                       onClick={toggleHandler}
                     >
                     {isFollowing ? (
-                      <div className="px-3.5 py-2.5 text-center w-full h-full rounded-md text-[gray] bg-[#aedde1]">
+                      <div className="md:px-3.5 md:py-2.5 text-center w-full h-full rounded-md text-[gray] bg-[#aedde1]">
                         Following
                       </div>
                       ) : (
-                        <div className="px-3.5 py-2.5 text-center text-white w-full rounded-md h-full bg-[#207F87]">
+                        <div className="md:px-3.5 md:py-2.5 text-center text-white w-full rounded-md h-full bg-[#207F87]">
                           Follow
                         </div>
                       )
