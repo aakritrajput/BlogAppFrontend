@@ -43,10 +43,10 @@ function Follower() {
     
   return (
     <>
-        <h1 className="text-[#207F87] text-3xl w-full flex justify-center font-semibold py-3">BlogApp</h1>
-        <div className='h-full'>
-            <h1 className='w-full flex justify-center text-2xl font-semibold text-[#1a4759]'>followers</h1>
-            <div className="w-full  items-center flex flex-col gap-y-4 " onScroll={scrollHandler}>
+        <h1 className="text-[#207F87] text-3xl w-full flex justify-center bg-[#DDDBDB] font-semibold py-3">BlogApp</h1>
+        <div className=' bg-[#DDDBDB] h-[100vh]'>
+            <h1 className='w-full flex justify-center text-2xl font-semibold bg-[#DDDBDB] mb-4 text-[#1a4759]'>followers</h1>
+            <div className="w-full  items-center flex flex-col gap-y-4 bg-[#DDDBDB] " onScroll={scrollHandler}>
              {followers &&
                followers.length > 0 &&
                followers.map((doc) => (
@@ -62,11 +62,11 @@ function Follower() {
                ))}
             </div>
             {loading && 
-            <div className="w-full h-[30px]  flex justify-center items-center my-7">
-                <div className="animate-spin rounded-full h-[30px] w-[30px] border-t-[5px] border-[#207F87]"></div>
+            <div className="w-full h-[30px]  flex justify-center bg-[#DDDBDB] items-center my-7">
+                <div className="animate-spin rounded-full h-[30px] bg-[#DDDBDB] w-[30px] border-t-[5px] border-[#207F87]"></div>
             </div>}
-            {errorMessage && <div className="w-full text-centre my-7 flex justify-center" >{errorMessage}</div>}
-            {!hasMore && <div className="w-full text-center my-7">No more followers to load</div>}
+            {errorMessage && <div className="w-full text-centre my-7 flex bg-[#DDDBDB] justify-center" >{errorMessage}</div>}
+            {!hasMore && <div className="w-full text-center bg-[#DDDBDB] my-7">No more followers to load</div>}
           
         </div>
     </>

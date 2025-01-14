@@ -84,23 +84,40 @@ function Comment({userImage, userId , username , authorId ,  commentId, content}
     console.log("commentOwner" , commentOwner)
     
   return (
-    <>
+    <div>
     {!deleted && 
-    <div className="w-[80vw] bg-transparent justify-between flex relative ">
+    <div className="sm:w-[80vw] w-[90vw] bg-transparent justify-between flex items-center relative ">
         {loading && (
           <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center bg-opacity-10 bg-black z-20">
             <div className="animate-spin rounded-full h-[25px] w-[25px] border-t-[5px] border-[#24393b]"></div>
           </div>
         )}
-      <div className='flex gap-2'>
-        <div className="flex justify-center items-center px-2">
-        {userImage?.length > 0 ? <img src={userImage} className="w-[40px] h-[40px] object-cover rounded-full"/> : <img src={defaultProfilePicture} className="w-[40px] h-[40px] rounded-full"/>}
-        </div>
-        <div>
+        <div className='flex gap-2'>
+            <div className="flex justify-center items-center px-2">
+                {userImage?.length > 0 ? (
+                  <div className="w-[40px] h-[40px]">
+                    <img
+                      src={userImage}
+                      className="w-full h-full object-cover rounded-full"
+                      alt="User"
+                    />
+                  </div>
+                ) : (
+                  <div className="w-[40px] h-[40px]">
+                    <img
+                      src={defaultProfilePicture}
+                      className="w-full h-full object-cover rounded-full"
+                      alt="Default"
+                    />
+                  </div>
+                )}
+            </div>
+
+        <div >
             <div className="mx-2">
                 <h1 className="font-medium text-[#1f1f1f]">{username}</h1>
             </div>
-            <div className="leading-none w-[70vw]  text-lg mx-2 break-words whitespace-pre-wrap p-2">
+            <div className="leading-none text-[16px] mx-2  sm:text-lg sm:mx-2 break-words whitespace-pre-wrap sm:p-2">
                 {content}
             </div>
             <div className="flex gap-2">
@@ -110,16 +127,16 @@ function Comment({userImage, userId , username , authorId ,  commentId, content}
                 <h1>{likesCount}</h1>
             </div>
         </div>
-      </div>
-      <div className='flex items-center '>
-        {commentOwner && 
-        <button className=" z-10" onClick={deleteCommentHandler}>
-          <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"> <path d="M3 6l3 18h12l3-18H3zM21 4h-5V2c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H3v2h18V4zm-9-2h4v2h-4V2z" stroke="black" fill="none"/> </svg>
-        </button>}
-      </div>
-      {errorMessage && <div className="text-red-600 w-full flex justify-center text-centre my-7" >{errorMessage}</div>} 
+        </div>
+        <div className='flex items-center mr-2 w-[24px] '>
+          {commentOwner && 
+          <button className=" z-10" onClick={deleteCommentHandler}>
+            <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"> <path d="M3 6l3 18h12l3-18H3zM21 4h-5V2c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H3v2h18V4zm-9-2h4v2h-4V2z" stroke="black" fill="none"/> </svg>
+          </button>}
+        </div>
+        {errorMessage && <div className="text-red-600 w-full flex justify-center text-centre my-7" >{errorMessage}</div>} 
     </div>}
-    </>
+    </div>
     
   )
 }

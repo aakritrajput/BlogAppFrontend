@@ -88,11 +88,11 @@ function Header() {
         </ul>
       </div>
       {loggedIn ? 
-      <div className="flex gap-5 items-center"><button onClick={LogoutHandler} className="px-3 py-2 bg-[#6C2E2E] rounded-xl text-white">Logout</button></div>
+      <div className="flex gap-2 sm:gap-5 items-center"><button onClick={LogoutHandler} className="sm:px-3 sm:py-2 p-1 bg-[#6C2E2E] rounded-xl text-white">Logout</button></div>
        : 
-       <div className="flex gap-5 items-center">
-        <Link to="/register" className="px-3 py-2 bg-[#6C2E2E] hover:bg-[#7b3e3e] rounded-xl text-white">Register</Link>
-        <Link to="/login" className="px-3 py-2 bg-[#6C2E2E] rounded-xl text-white">Login</Link>
+       <div className="flex gap-2 sm:gap-5 items-center">
+        <Link to="/register" className="sm:px-3 sm:py-2 p-1 bg-[#6C2E2E] hover:bg-[#7b3e3e] rounded-xl text-white">Register</Link>
+        <Link to="/login" className="sm:px-3 sm:py-2 p-1 bg-[#6C2E2E] rounded-xl text-white">Login</Link>
       </div>
       }
     </div>

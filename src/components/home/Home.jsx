@@ -56,8 +56,8 @@ function Home() {
         <div className="w-full h-[30px]  flex justify-center items-center my-7">
             <div className="animate-spin rounded-full h-[30px] w-[30px] border-t-[5px] border-[#207F87]"></div>
         </div>}
-      {errorMessage && <div className="text-red-600 w-full text-centre my-7" >{errorMessage}</div>} 
-      {!hasMore && <div className="w-full text-center my-7">No more blogs to load</div>}
+      {errorMessage && <div className="text-red-600 w-full flex justify-center text-centre my-7" >{errorMessage}</div>} 
+      {!hasMore && <div className="w-full flex justify-center text-center my-7">No more blogs to load</div>}
     </div>
   )
 }

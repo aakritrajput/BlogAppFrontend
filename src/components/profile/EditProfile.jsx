@@ -79,26 +79,26 @@ function EditProfile() {
   return (
     <div>
      <h1 className="text-[#207F87] text-3xl w-full flex justify-center font-semibold py-3">BlogApp</h1>
-     <div className="h-[100vh] w-full flex relative justify-center bg-[#DDDBDB] items-center">
+     <div className="h-[100vh]  flex relative justify-center bg-[#DDDBDB] items-center">
         {loading && 
         <div className="w-[90vw] h-[70vh] absolute flex justify-center items-center">
             <div className="animate-spin rounded-full h-[10vw] w-[10vw] border-t-[10px] border-[#207F87]"></div>
         </div>}
-      <div className="flex flex-col mx-3 px-5 items-center bg-white p-4 rounded-xl shadow-md">
+      <div className="flex flex-col sm:mx-3 sm:px-5 items-center bg-[#DDDBDB] p-4 rounded-xl shadow-md">
         <form onSubmit={handleSubmitProfilePic(profilePicHandler)} encType="multipart/form-data" className="flex flex-col w-full mt-2">
         
-            <label htmlFor="profilePic" className='text-black text-xl font-semibold'>ProfilePic :</label>
+            <label htmlFor="profilePic" className='text-black sm:text-xl text-[15px] font-semibold'>ProfilePic:</label>
             <div className="flex">
-                <input type="file" id="profilePic" className='bg-[#9d9a9a] flex-1 py-3 focus:outline-[#207F87] p-2 rounded-l-lg focus:bg-[#bdbbbb]' {...registerProfilePic("profilePic", {required: "profilePic is required !!"})} />
+                <input type="file" id="profilePic" className='bg-[#9d9a9a] flex-1 py-3 focus:outline-[#207F87] text-[10px] sm:p-2 p-1 rounded-l-lg focus:bg-[#bdbbbb]' {...registerProfilePic("profilePic", {required: "profilePic is required !!"})} />
                 <button type="submit" disabled={loading} onClick={()=>{resetBannerPic() ; resetProfile();}} className="rounded-r-lg bg-[#207F87] px-3 hover:bg-[#192f31] text-white">Upload</button>
             </div>
         </form>
         {errorsProfilePic.profilePic && <p className='text-red-600'>{errorsProfilePic.profilePic.message}</p>}
 
         <form onSubmit={handleSubmitBannerPic(bannerPicHandler)} encType="multipart/form-data" className="flex flex-col w-full mt-2">
-            <label htmlFor="profilePic" className='text-black text-xl font-semibold'>BannerPic :</label>
+            <label htmlFor="bannerPic" className='text-black sm:text-xl text-[15px] font-semibold'>BannerPic:</label>
             <div className="flex">
-                <input type="file" id="bannerPic" className='bg-[#9d9a9a] flex-1 py-3 focus:outline-[#207F87] p-2 rounded-l-lg focus:bg-[#bdbbbb]' {...registerBannerPic("bannerPic", {required: "bannerPic is required !!"})} />
+                <input type="file" id="bannerPic" className='bg-[#9d9a9a] flex-1 py-3 focus:outline-[#207F87] text-[10px] sm:p-2 p-1 rounded-l-lg focus:bg-[#bdbbbb]' {...registerBannerPic("bannerPic", {required: "bannerPic is required !!"})} />
                 <button type="submit" disabled={loading} onClick={()=>{resetProfilePic() ; resetProfile();}} className="rounded-r-lg bg-[#207F87] px-3 hover:bg-[#192f31] text-white">Upload</button>
             </div>
         </form>
@@ -106,12 +106,12 @@ function EditProfile() {
 
         <form onSubmit={handleSubmitProfile(profileHandler)} className="flex flex-col w-full mt-2">
             <div className='flex gap-2 items-center mt-[20px] w-full'>
-                <label htmlFor="fullname" className='text-black text-xl font-semibold'>Fullname :</label>
+                <label htmlFor="fullname" className='text-black sm:text-xl text-[15px] font-semibold'>Fullname:</label>
                 <input type="text" id="fullname" className='bg-[#9d9a9a] flex-1 py-3 focus:outline-[#207F87] p-2 rounded-lg focus:bg-[#bdbbbb]' {...registerProfile("fullname")} />
             </div>
             {errorsProfile.fullname && <p className='text-red-600'>{errorsProfile.fullname.message}</p>}
             <div className='flex gap-2 items-center mt-[20px] w-full'>
-                <label htmlFor="bio" className='text-black text-xl font-semibold'>Bio :</label>
+                <label htmlFor="bio" className='text-black sm:text-xl text-[15px] font-semibold'>Bio:</label>
                 <input type="text" id="bio" className='bg-[#9d9a9a] flex-1 py-3 focus:outline-[#207F87] p-2 px-3 rounded-lg focus:bg-[#bdbbbb]' {...registerProfile("bio")} />
             </div>
             {errorsProfile.bio && <p className='text-red-600'>{errorsProfile.bio.message}</p>}

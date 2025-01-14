@@ -40,7 +40,7 @@ function CreateBlog() {
     <div className='max-w-[100vw] min-h-[100vh] relative bg-[#DDDBDB] pb-[70px] p-4 px-[5vw]'>
       {loading && 
         <div className="w-[90vw] h-[70vh] absolute flex justify-center items-center">
-            <div className="animate-spin rounded-full h-[10vw] w-[10vw] border-t-[10px] border-[#207F87]"></div>
+            <div className="animate-spin rounded-full h-[10vw] w-[10vw] border-t-[3px] md:border-t-[10px] border-[#207F87]"></div>
         </div>}
       <form onSubmit={handleSubmit(submitHandler)}  encType="multipart/form-data">
         <div className='flex gap-1 sm:gap-2 items-center mt-[10px] sm:mt-[20px] w-full'>

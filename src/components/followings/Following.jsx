@@ -41,9 +41,9 @@ function Following() {
     
   return (
     <>
-        <h1 className="text-[#207F87] text-3xl w-full flex justify-center font-semibold py-3">BlogApp</h1>
-        <div className='h-full'>
-            <h1 className='w-full flex justify-center text-2xl font-semibold text-[#1a4759]'>following</h1>
+        <h1 className="text-[#207F87] text-3xl w-full flex justify-center bg-[#DDDBDB] font-semibold py-3">BlogApp</h1>
+        <div className='h-[100vh] bg-[#DDDBDB]'>
+            <h1 className='w-full flex justify-center text-2xl font-semibold mb-3 text-[#1a4759]'>following</h1>
             <div className="w-full  items-center flex flex-col gap-y-4 " onScroll={scrollHandler}>
              {following &&
                following.length > 0 &&

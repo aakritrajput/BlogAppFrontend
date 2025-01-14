@@ -50,7 +50,6 @@ function Blogs() {
 
     useEffect(()=>{
         const getUserFollowings = async() => {
-            setLoading(true);
             try {
                 const FollowingCountResponse = await axios.get(`/api/v1/followings/followerAndFollowingCount/${authorId}`,{withCredentials: true})
                 const followingStatusResponse = await axios.get(`/api/v1/followings/followingStatus/${authorId}`,{withCredentials: true})
@@ -63,8 +62,6 @@ function Blogs() {
                 setIsFollowed(followingStatusResponse.data.data.isFollowedByBlogger);
             } catch (error) {
                 error.status === 401 ? setErrorMessage("You are not authorized to perform this action or perform this task !! please login .. ") : setErrorMessage(error.response.data)
-            }finally{
-                setLoading(false)
             }
         }
         getUserFollowings();
@@ -213,43 +210,43 @@ function Blogs() {
   return (
     <div className='relative'>
         {loading && 
-        <div className="w-[100vw] h-full absolute flex justify-center items-center bg-[#000000c8]">
-            <div className="animate-spin rounded-full h-[10vw] w-[10vw] border-t-[10px] border-[#207F87]"></div>
+        <div className="w-[100vw] h-full absolute flex justify-center z-50 items-center bg-[#000000c8]">
+            <div className="animate-spin rounded-full h-[10vw] w-[10vw] md:border-t-[10px] border-t-[4px] border-[#207F87]"></div>
         </div>}
-      <div className='flex my-2 justify-between  mx-9 px-5'>
-        <h1 className='text-[#207F87] text-3xl font-bold'>BlogApp</h1>
+      <div className='flex my-2 justify-between mx-2 px-2 md:mx-9 md:px-5'>
+        <h1 className='text-[#207F87] md:text-3xl sm:text-2xl text-[18px] font-bold'>BlogApp</h1>
         {blogOwner && 
         <div className='flex gap-3'>
-            <button onClick={editHandler} className='px-3 py-2 rounded-lg bg-green-600 text-black'>Edit</button>
-            <button onClick={deleteHandler} className='px-3 py-2 rounded-lg bg-red-500 text-white'>Delete</button>
+            <button onClick={editHandler} className='sm:px-3 px-1.5 py-1.5 sm:py-2 rounded-lg bg-green-600 text-black'>Edit</button>
+            <button onClick={deleteHandler} className='sm:px-3 px-1.5 py-1.5 sm:py-2 rounded-lg bg-red-500 text-white'>Delete</button>
         </div>}
       </div>
       <div>
         <div className='flex flex-col items-center my-3'>
-            <h1 className='text-black text-[30px] mb-2 font-semibold'>{blog.title}</h1>
-            <div>
-                <img src={blog?.coverImage} className='rounded-2xl border-2 border-spacing-1 border-[#207F87] h-[300px]' alt="coverImage" />
+            <h1 className='text-black sm:text-[30px] w-full  text-center mb-2 mx-2 font-semibold'>{blog.title}</h1>
+            <div className='px-2'>
+                <img src={blog?.coverImage} className='rounded-2xl border-2 border-spacing-1 border-[#207F87]  sm:w-auto sm:h-[300px]' alt="coverImage" />
             </div>
-            <div className='p-5 px-11 m-8 border-b-4 border-b-[#207F87] mt-2'>
+            <div className='sm:p-5 md:px-11 sm:px-8 px-6 sm:m-8 sm:border-b-4 sm:border-b-[#207F87] mt-2'>
                 {blog?.content}
             </div>
         </div>
 
-        <div className='m-5 px-3 mb-5 flex border-2 border-[gray] rounded-3xl p-3 justify-around'>
+        <div className='sm:m-5  mb-5 flex border-2 border-[gray] mx-2 rounded-3xl p-3 justify-around'>
             <div >
-                <button onClick={likeToggleHandler} className='mb-2 bg-green-400  w-[40px] h-[40px]'>
+                <button onClick={likeToggleHandler} className='mb-2 bg-green-400 w-[30px] h-[30px]'>
                   {liked ? <img src={likedPng} /> : <img src={unLikedPng}/>}
                 </button>
                 <h1 className='w-full flex justify-center'>{likesCount}</h1>
                 
             </div>
             <div >
-                <button onClick={saveBlogHandler} className='mb-2 w-[40px] flex justify-center  h-[40px]'>
+                <button onClick={saveBlogHandler} className='mb-2 w-[30px] flex justify-center  h-[30px]'>
                     {isBlogSaved ? 
-                    <svg width="40" height="40" viewBox="0 0 24 24" stroke='black' xmlns="http://www.w3.org/2000/svg">
+                    <svg width="30" height="30" viewBox="0 0 24 24" stroke='black' xmlns="http://www.w3.org/2000/svg">
                         <path d="M17 3H7C5.9 3 5 3.9 5 5v14c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V7l-4-4zM12 19c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm2-9H8V5h6v5z" fill="black" />
                     </svg> :
-                    <svg width="40" height="40" viewBox="0 0 24 24" stroke='black' xmlns="http://www.w3.org/2000/svg">
+                    <svg width="30" height="30" viewBox="0 0 24 24" stroke='black' xmlns="http://www.w3.org/2000/svg">
                         <path d="M17 3H7C5.9 3 5 3.9 5 5v14c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V7l-4-4zM12 19c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm2-9H8V5h6v5z" fill="none" />
                     </svg> 
                     }
@@ -258,46 +255,46 @@ function Blogs() {
             </div>
             <div className= 'flex flex-col items-center'>
                 { commentVisible ?
-                    <button onClick={commentHandler} className='mb-2 w-[40px] flex justify-center h-[40px]'><svg width="35" height="35" viewBox="0 0 24 24"  xmlns="http://www.w3.org/2000/svg"> <path d="M21 2H3c-1.1 0-2 .9-2 2v18l4-4h16c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM3 16v-2h16v2H3zm0-4V8h16v4H3zM3 6V4h16v2H3z" stroke="black" fill="black"/> </svg></button>
+                    <button onClick={commentHandler} className='mb-2 w-[30px] flex justify-center h-[30px]'><svg width="30" height="30" viewBox="0 0 24 24"  xmlns="http://www.w3.org/2000/svg"> <path d="M21 2H3c-1.1 0-2 .9-2 2v18l4-4h16c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM3 16v-2h16v2H3zm0-4V8h16v4H3zM3 6V4h16v2H3z" stroke="black" fill="black"/> </svg></button>
                     :
-                    <button onClick={commentHandler} className='mb-2 w-[40px] flex justify-center h-[40px]'><svg width="35" height="35" viewBox="0 0 24 24"  xmlns="http://www.w3.org/2000/svg"> <path d="M21 2H3c-1.1 0-2 .9-2 2v18l4-4h16c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM3 16v-2h16v2H3zm0-4V8h16v4H3zM3 6V4h16v2H3z" stroke="black" fill="none"/> </svg></button>
+                    <button onClick={commentHandler} className='mb-2 w-[30px] flex justify-center h-[30px]'><svg width="30" height="30" viewBox="0 0 24 24"  xmlns="http://www.w3.org/2000/svg"> <path d="M21 2H3c-1.1 0-2 .9-2 2v18l4-4h16c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM3 16v-2h16v2H3zm0-4V8h16v4H3zM3 6V4h16v2H3z" stroke="black" fill="none"/> </svg></button>
                 }
                 <h1>Comments</h1>
             </div>
         </div>
 
-        <div className='flex justify-between mx-3 bg-[#3e3d3d51] rounded-lg p-3 mb-7 px-2'>
-            <div className='ml-4 flex flex-col justify-center'>
+        <div className='flex justify-between mx-3 bg-[#3e3d3d51] rounded-lg py-3 mb-7 sm:px-2'>
+            <div className='sm:ml-4 ml-2 flex flex-col justify-center'>
                 <button
-                className="w-full h-[40px] relative mb-2"
+                className="w-full h-[30px] sm:h-[40px] relative mb-2"
                 disabled={loading}
                 onClick={toggleHandler}
                 >
                     {isFollowing ? (
-                      <div className="px-3.5 py-2.5 text-center w-full h-full rounded-md text-[gray] bg-[#aedde1]">
+                      <div className="sm:px-3.5 sm:py-2.5 px-1.5 py-1.5 text-center w-full h-full rounded-md text-[gray] bg-[#aedde1]">
                         Following
                       </div>
                     ) : (
-                      <div className="px-3.5 py-2.5 text-center text-white w-full rounded-md h-full bg-[#207F87]">
+                      <div className="sm:px-3.5 sm:py-2.5 px-1.5 py-1.5 text-center text-white w-full rounded-md h-full bg-[#207F87]">
                         Follow
                       </div>
                     )}
                     {FollowLoading && (
                       <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center bg-opacity-10 bg-black z-20">
-                        <div className="animate-spin rounded-full h-[25px] w-[25px] border-t-[5px] border-[#24393b]"></div>
+                        <div className="animate-spin rounded-full h-[20px] w-[20px] border-t-[5px] border-[#24393b]"></div>
                       </div>
                     )}
                 </button>
                 {isFollowed && <p className="text-[#207F87] w-full justify-center flex"> Follows you </p>}
             </div>
-            <div className='flex mx-4 gap-3'>
-                <h1 className='h-full flex items-center text-2xl font-semibold'>Author: </h1>
-                <button className="w-75% border-r-4 h-full pr-3 border-r-[#d3d2d2] flex gap-2" onClick={profileClickHandler}>
+            <div className='grid grid-cols-1 sm:grid-cols-2 mx-4 sm:gap-3'>
+                <h1 className='h-full flex items-center sm:text-2xl text-[19px] font-semibold'>Author: </h1>
+                <button className="w-75% sm:border-r-4 h-full sm:pr-3 pr-2 border-r-[#d3d2d2] flex gap-2" onClick={profileClickHandler}>
                     <div className="h-full flex items-center">
-                        {blog?.author?.profilePic?.length > 0 ? <img src={blog?.author?.profilePic}  className="w-[70px] h-[70px] object-cover rounded-full" /> : <img src={defaultProfilePicture}  className="w-[70px] h-[70px] rounded-full" /> }
+                        {blog?.author?.profilePic?.length > 0 ? <img src={blog?.author?.profilePic}  className="sm:w-[70px] sm:h-[70px] w-[40px] h-[40px] object-cover rounded-full" /> : <img src={defaultProfilePicture}  className="sm:w-[70px] sm:h-[70px] w-[40px] h-[40px] rounded-full" /> }
                     </div>
                     <div>
-                        <h1 className="text-xl text-black font-bold">{blog?.author?.username}</h1>
+                        <h1 className="sm:text-xl text-[16px] text-black font-bold">{blog?.author?.username}</h1>
                         <p className="text-[#444444]">{`${followers} followers`}</p>
                     </div>
                 </button>
@@ -305,12 +302,12 @@ function Blogs() {
         </div>
 
         <div className='hidden' id='commentDiv'>
-            <form onSubmit={handleSubmit(addCommentHandler)} className='flex relative px-11 mt-4' >
-               <div className="h-full flex items-center">
-                   {currentUser?.profilePic?.length > 0 ? <img src={currentUser?.profilePic}  className="w-[40px] h-[40px] rounded-full" /> : <img src={defaultProfilePicture}  className="w-[40px] h-[40px] rounded-full" /> }
+            <form onSubmit={handleSubmit(addCommentHandler)} className='flex relative px-6 sm:px-11 mt-4' >
+               <div className=" w-[40px] h-[40px] flex-shrink-0 sm:flex items-center">
+                   {currentUser?.profilePic?.length > 0 ? <img src={currentUser?.profilePic}  className=" rounded-full" /> : <img src={defaultProfilePicture}  className="rounded-full" /> }
                </div>
-               <input type="text" placeholder='Enter your comment..' className=' bg-transparent flex-1 focus:outline-none border-b-[2px] border-b-gray-700 px-4 my-4 placeholder:text-gray-600' {...register("content", {required: "comment cannot be empty!!"})}/>
-               <button type='submit' className='bg-[#207F87] px-3 py-1 h-[40px] absolute bottom-4 right-11 rounded-lg text-white'>POST</button>
+               <input type="text" placeholder='Enter your comment..' className=' bg-transparent flex-1 mr-[60px] focus:outline-none border-b-[2px] border-b-gray-700 px-4 my-4 text-[14px] placeholder:text-gray-600' {...register("content", {required: "comment cannot be empty!!"})}/>
+               <button type='submit' className='bg-[#207F87] px-3 py-1 h-[40px] absolute bottom-4 right-[24px] sm:right-11 rounded-lg text-white'>POST</button>
             </form>
             {errors.content && <p className='w-full flex justify-center text-red-600'>{errors.content.message}</p>}
             <div className='flex flex-col mb-11 items-center gap-2 mt-2'>
@@ -332,10 +329,6 @@ function Blogs() {
             </div>
         </div>
       </div>
-      {loading && 
-        <div className="w-full h-[100vw]  flex justify-center z-20 absolute items-center my-7">
-            <div className="animate-spin rounded-full h-[30px] w-[30px] border-t-[5px] border-[#207F87]"></div>
-        </div>}
       {errorMessage && <div className="text-red-600 w-full flex justify-center text-centre my-7" >{errorMessage}</div>} 
     </div>
   )
