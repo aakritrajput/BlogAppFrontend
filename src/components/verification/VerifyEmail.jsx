@@ -16,7 +16,7 @@ function VerifyEmail() {
         setLoading(true);
         setErrorMessage("");
         setSuccessMessage("");
-        const verificationLink = `/api/v1/user/register/verify-token?token=${encodeURIComponent(token)}&email=${encodeURIComponent(email)}`;
+        const verificationLink = `https://blogappbackend-uy9g.onrender.com/api/v1/user/register/verify-token?token=${encodeURIComponent(token)}&email=${encodeURIComponent(email)}`;
         try {
             const response = await axios.get(verificationLink)
             setSuccessMessage(response.data.message)
@@ -44,22 +44,11 @@ function VerifyEmail() {
       <div className="bg-white shadow-lg shadow-black rounded-2xl flex flex-col  justify-center items-center w-[95%]  py-8 h-[60%] md:w-[60%]">
        {successMessage && 
        <div className="flex flex-col justify-center items-center text-[22px] md:text-[32px]">
-        <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#207F87" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M14 9V5a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v12a4 4 0 0 0 4 4h5a4 4 0 0 0 4-4v-4"></path>
-          <path d="M14 9l2-2"></path>
-          <path d="M14 9l-2-2"></path>
-        </svg>
 
         <h1 className="text-[23px] md:text-[40px] text-[black]">Your email is successfully verified !!</h1>
         <Link to="/login" className="px-3 py-2 rounded-md bg-[#207F87] text-white">Login</Link>
        </div>}
        {errorMessage && <div className="flex flex-col justify-center items-center ">
-        <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#207F87" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M10 15v4a4 4 0 0 0 4 4h5a4 4 0 0 0 4-4V9a4 4 0 0 0-4-4h-5a4 4 0 0 0-4 4v4"></path>
-          <path d="M10 15l2 2"></path>
-          <path d="M10 15l-2 2"></path>
-        </svg>
-        
         <h1 className="text-[black] font-semibold text-[23px] md:text-[40px]">{errorMessage}</h1>
         </div>}
       </div>

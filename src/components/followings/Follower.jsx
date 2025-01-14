@@ -15,7 +15,7 @@ function Follower() {
         if (loading || !hasMore) return ;
         setLoading(true);
         try {
-            const response = await axios.get(`/api/v1/followings/userFollowers/${bloggerId}?page=${page}&limit=${limit}`, {withCredentials: true})
+            const response = await axios.get(`https://blogappbackend-uy9g.onrender.com/api/v1/followings/userFollowers/${bloggerId}?page=${page}&limit=${limit}`, {withCredentials: true})
             setFollowers((prev)=> [...prev , ...response.data.data.docs])
             console.log("data of followers :" , response.data.data.docs)
             setHasMore(response.data.data.hasNextPage);

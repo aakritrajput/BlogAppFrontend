@@ -10,7 +10,7 @@ function HeaderMobile() {
     useEffect(() => {
         const checkLogin = async () => {
             try {
-                await axios.get('/api/v1/user/profile', { withCredentials: true });
+                await axios.get('https://blogappbackend-uy9g.onrender.com/api/v1/user/profile', { withCredentials: true });
                 setLoggedIn(true);
             } catch (error) {
                 setLoggedIn(false);

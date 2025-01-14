@@ -40,7 +40,7 @@ function Profile() {
         const getUserProfile = async() => {
             setLoading(true);
             try {
-                const response = await axios.get(`/api/v1/user/userProfile/${userId}`,{withCredentials: true})
+                const response = await axios.get(`https://blogappbackend-uy9g.onrender.com/api/v1/user/userProfile/${userId}`,{withCredentials: true})
                 setProfile(response.data.data)
             } catch (error) {
               error.status === 401 ? setErrorMessage("You are not authorized to perform this action or perform this task !! please login .. ") : setErrorMessage(error.response.data)
@@ -49,9 +49,9 @@ function Profile() {
 
         const dashBoard = async() => {
             try {
-                const response = await axios.get(`/api/v1/dashboard/${userId}`, {withCredentials: true});
-                const followingStatusResponse = await axios.get(`/api/v1/followings/followingStatus/${userId}`,{withCredentials: true})
-                const contentResponse = await axios.get(`/api/v1/blog/userBlogs/${userId}`, {withCredentials: true})
+                const response = await axios.get(`https://blogappbackend-uy9g.onrender.com/api/v1/dashboard/${userId}`, {withCredentials: true});
+                const followingStatusResponse = await axios.get(`https://blogappbackend-uy9g.onrender.com/api/v1/followings/followingStatus/${userId}`,{withCredentials: true})
+                const contentResponse = await axios.get(`https://blogappbackend-uy9g.onrender.com/api/v1/blog/userBlogs/${userId}`, {withCredentials: true})
                 setContent(contentResponse.data.data);
                 setIsFollowing(followingStatusResponse.data.data.isFollowing);
                 setIsFollowed(followingStatusResponse.data.data.isFollowedByBlogger);
@@ -71,7 +71,7 @@ function Profile() {
     const toggleHandler = async() => {
         setLoading(true)
         try {
-            const response = await axios.patch(`/api/v1/followings/toggleFollow/${userId}`, {withCredentials: true})
+            const response = await axios.patch(`https://blogappbackend-uy9g.onrender.com/api/v1/followings/toggleFollow/${userId}`, {withCredentials: true})
             if(response.data.data.Following === true){
                 setIsFollowing(true);
             }else{
@@ -95,7 +95,7 @@ function Profile() {
       setIsSavedBLogs(false);
       setIsLikedBlogs(false);
       try {
-        const contentResponse = await axios.get(`/api/v1/blog/userBlogs/${userId}`, {withCredentials: true});
+        const contentResponse = await axios.get(`https://blogappbackend-uy9g.onrender.com/api/v1/blog/userBlogs/${userId}`, {withCredentials: true});
         setContent(contentResponse.data.data);
       } catch (error) {
         error.status === 401 ? setErrorMessage("You are not authorized to perform this action or perform this task !! please login .. ") : setErrorMessage(error.response.data)
@@ -111,7 +111,7 @@ function Profile() {
       setIsSavedBLogs(false);
       setIsLikedBlogs(true);
       try {
-        const contentResponse = await axios.get(`/api/v1/like/usersLikedBlogs`, {withCredentials: true});
+        const contentResponse = await axios.get(`https://blogappbackend-uy9g.onrender.com/api/v1/like/usersLikedBlogs`, {withCredentials: true});
         setContent(contentResponse.data.data);
         //console.log("liked blogs:",contentResponse.data.data)
       } catch (error) {
@@ -128,7 +128,7 @@ function Profile() {
       setIsSavedBLogs(true);
       setIsLikedBlogs(false);
       try {
-        const contentResponse = await axios.get(`/api/v1/user/savedBlogs`, {withCredentials: true});
+        const contentResponse = await axios.get(`https://blogappbackend-uy9g.onrender.com/api/v1/user/savedBlogs`, {withCredentials: true});
         if(contentResponse?.data?.data[0]?.savedBlogs?.length > 0){
           setContent(contentResponse.data.data[0].savedBlogs );
           console.log("content saved ", contentResponse.data.data[0].savedBlogs)

@@ -21,7 +21,7 @@ function Search() {
         console.log("blogSearchHandler")
         setLoading(true);
         try {
-            const response = await axios.get(`/api/v1/blog/searchBlogs/?query=${data.query1}&page=${page}&limit=${limit}`, {withCredentials: true})
+            const response = await axios.get(`https://blogappbackend-uy9g.onrender.com/api/v1/blog/searchBlogs/?query=${data.query1}&page=${page}&limit=${limit}`, {withCredentials: true})
             setItems((prev)=>[...prev , ...response.data.data.docs])
             console.log("response from blogsearch",response)
             setHasMore(page < response.data.data.totalPages)
@@ -38,7 +38,7 @@ function Search() {
       console.log("bloggerSearchHandler")
       setLoading(true);
       try {
-        const response = await axios.get(`/api/v1/user/bloggers?query=${data.query2}`, {withCredentials: true})
+        const response = await axios.get(`https://blogappbackend-uy9g.onrender.com/api/v1/user/bloggers?query=${data.query2}`, {withCredentials: true})
         setItems(response.data.data)
         console.log("response from blogger search :", response)
       } catch (error) {

@@ -20,7 +20,7 @@ function Comment({userImage, userId , username , authorId ,  commentId, content}
     const likeToggleHandler = async() => {
         setLoading(true);
         try {
-            const response = await axios.patch(`/api/v1/like/toggleCommentLike/${commentId}`, {withCredentials: true})
+            const response = await axios.patch(`https://blogappbackend-uy9g.onrender.com/api/v1/like/toggleCommentLike/${commentId}`, {withCredentials: true})
             if(response.data.data.like === true){
                 setLiked(true);
             }else{
@@ -51,8 +51,8 @@ function Comment({userImage, userId , username , authorId ,  commentId, content}
         const getLikesCount = async() => {
             setLoading(true);
             try {
-                const response = await axios.get(`/api/v1/like/commentLikesCount/${commentId}`, {withCredentials: true})
-                const likeStatus = await axios.get(`/api/v1/like/isCommentLiked/${commentId}`, {withCredentials: true})
+                const response = await axios.get(`https://blogappbackend-uy9g.onrender.com/api/v1/like/commentLikesCount/${commentId}`, {withCredentials: true})
+                const likeStatus = await axios.get(`https://blogappbackend-uy9g.onrender.com/api/v1/like/isCommentLiked/${commentId}`, {withCredentials: true})
                 //console.log(response)
                 //console.log('likeStatus', likeStatus)
                 setLikesCount(response.data.data.likes);
@@ -72,7 +72,7 @@ function Comment({userImage, userId , username , authorId ,  commentId, content}
     const deleteCommentHandler = async() => {
         setLoading(true);
         try {
-            await axios.delete(`/api/v1/comment/deleteComment/${commentId}`, {withCredentials: true})
+            await axios.delete(`https://blogappbackend-uy9g.onrender.com/api/v1/comment/deleteComment/${commentId}`, {withCredentials: true})
             setDeleted(true)
         } catch (error) {
             error.status === 401 ? setErrorMessage("You are not authorized to perform this action or perform this task !! please login .. ") : setErrorMessage(error.response.data)

@@ -19,7 +19,7 @@ function CreateBlog() {
         formData.append("tags", data.tags);
         formData.append("content", data.content);
 
-        const response = await axios.post("/api/v1/blog/createBlog", formData,
+        const response = await axios.post("https://blogappbackend-uy9g.onrender.com/api/v1/blog/createBlog", formData,
           {
             headers: {
               "Content-Type": "multipart/form-data", 

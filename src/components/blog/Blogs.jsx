@@ -37,7 +37,7 @@ function Blogs() {
     useEffect(() => {
         const checkLogin = async () => {
             try {
-                const response = await axios.get('/api/v1/user/profile', { withCredentials: true });
+                const response = await axios.get('https://blogappbackend-uy9g.onrender.com/api/v1/user/profile', { withCredentials: true });
                 dispatch(setUser(response.data.data))
             } catch (error) {
                 dispatch(unsetUser());
@@ -51,8 +51,8 @@ function Blogs() {
     useEffect(()=>{
         const getUserFollowings = async() => {
             try {
-                const FollowingCountResponse = await axios.get(`/api/v1/followings/followerAndFollowingCount/${authorId}`,{withCredentials: true})
-                const followingStatusResponse = await axios.get(`/api/v1/followings/followingStatus/${authorId}`,{withCredentials: true})
+                const FollowingCountResponse = await axios.get(`https://blogappbackend-uy9g.onrender.com/api/v1/followings/followerAndFollowingCount/${authorId}`,{withCredentials: true})
+                const followingStatusResponse = await axios.get(`https://blogappbackend-uy9g.onrender.com/api/v1/followings/followingStatus/${authorId}`,{withCredentials: true})
     
                 //response.data.data.followers && following  --> count
                 // response.data.data.isFollowing && isFollowedByBlogger --> followingStatus
@@ -71,10 +71,10 @@ function Blogs() {
         const getBlog = async()=> {
             setLoading(true);
             try {
-                const response = await axios.get(`/api/v1/blog/blogById/${blogId}`, {withCredentials: true})
-                const likestatus = await axios.get(`/api/v1/like/isBlogLiked/${blogId}`, {withCredentials: true}) 
-                const likeCountResponse = await axios.get(`/api/v1/like/blogLikesCount/${blogId}`, {withCredentials:true})
-                const isBlogSaved = await axios.get(`/api/v1/blog/isBlogSaved/${blogId}`, {withCredentials: true})
+                const response = await axios.get(`https://blogappbackend-uy9g.onrender.com/api/v1/blog/blogById/${blogId}`, {withCredentials: true})
+                const likestatus = await axios.get(`https://blogappbackend-uy9g.onrender.com/api/v1/like/isBlogLiked/${blogId}`, {withCredentials: true}) 
+                const likeCountResponse = await axios.get(`https://blogappbackend-uy9g.onrender.com/api/v1/like/blogLikesCount/${blogId}`, {withCredentials:true})
+                const isBlogSaved = await axios.get(`https://blogappbackend-uy9g.onrender.com/api/v1/blog/isBlogSaved/${blogId}`, {withCredentials: true})
                 setBlog(response.data.data)
                 setLiked(likestatus.data.data.isLiked);
                 setLikesCount(likeCountResponse.data.data.likes);
@@ -98,7 +98,7 @@ function Blogs() {
     const toggleHandler = async() => {
         setFollowLoading(true)
         try {
-            const response = await axios.patch(`/api/v1/followings/toggleFollow/${authorId}`, {withCredentials: true})
+            const response = await axios.patch(`https://blogappbackend-uy9g.onrender.com/api/v1/followings/toggleFollow/${authorId}`, {withCredentials: true})
             if(response.data.data.Following === true){
                 setIsFollowing(true);
             }else{
@@ -123,7 +123,7 @@ function Blogs() {
     const addCommentHandler = async(data) => {
         setCommentLoading(true);
         try {
-            const response = await axios.post(`/api/v1/comment/postComment/${blogId}`, data, {withCredentials: true});
+            const response = await axios.post(`https://blogappbackend-uy9g.onrender.com/api/v1/comment/postComment/${blogId}`, data, {withCredentials: true});
             setBlogComments((prev)=> [response.data.data , ...prev])
             console.log("comment added!!", response.data.data)
         } catch (error) {
@@ -137,8 +137,8 @@ function Blogs() {
     const likeToggleHandler = async() => {
         try {
             console.log("liketoggle try runs!!");
-            const response = await axios.patch(`/api/v1/like/toggleBlogLike/${blogId}`, {withCredentials:true})
-            const likeCountResponse = await axios.get(`/api/v1/like/blogLikesCount/${blogId}`, {withCredentials:true})
+            const response = await axios.patch(`https://blogappbackend-uy9g.onrender.com/api/v1/like/toggleBlogLike/${blogId}`, {withCredentials:true})
+            const likeCountResponse = await axios.get(`https://blogappbackend-uy9g.onrender.com/api/v1/like/blogLikesCount/${blogId}`, {withCredentials:true})
             setLiked(response.data.data.like);
             setLikesCount(likeCountResponse.data.data.likes);
         } catch (error) {
@@ -151,11 +151,11 @@ function Blogs() {
         setLoading(true);
         try {
             if(isBlogSaved === false){
-              await axios.patch(`/api/v1/blog/saveBlog/${blogId}`, {withCredentials:true})
+              await axios.patch(`https://blogappbackend-uy9g.onrender.com/api/v1/blog/saveBlog/${blogId}`, {withCredentials:true})
               setIsBlogedSaved(true);
               console.log("blog saved successfully !!")
             }else{
-                await axios.patch(`/api/v1/user/removeFromSavedBlogs/${blogId}`, {withCredentials:true})
+                await axios.patch(`https://blogappbackend-uy9g.onrender.com/api/v1/user/removeFromSavedBlogs/${blogId}`, {withCredentials:true})
                 setIsBlogedSaved(false);
                 console.log("blog unsaved successfully !!")
             }
@@ -177,7 +177,7 @@ function Blogs() {
             SetCommentVisible(true);
             setCommentLoading(true);
             try {
-                const response = await axios.get(`/api/v1/comment/blogComments/${blogId}`, {withCredentials:true})
+                const response = await axios.get(`https://blogappbackend-uy9g.onrender.com/api/v1/comment/blogComments/${blogId}`, {withCredentials:true})
                 setBlogComments(response.data.data)
                 console.log("comment data received from backend !!", response)
             } catch (error) {
@@ -198,7 +198,7 @@ function Blogs() {
     const deleteHandler = async() => {
         setLoading(true);
         try {
-            await axios.delete(`/api/v1/blog/deleteBlog/${blogId}`, {withCredentials: true})
+            await axios.delete(`https://blogappbackend-uy9g.onrender.com/api/v1/blog/deleteBlog/${blogId}`, {withCredentials: true})
             setLoading(false);
             navigate("/")
         } catch (error) {

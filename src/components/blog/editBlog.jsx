@@ -15,7 +15,7 @@ function EditBlog() {
         const blog = async() => {
             setLoading(true);
            try {
-            const response =  await axios.get(`/api/v1/blog/blogById/${blogId}`, {withCredentials: true})
+            const response =  await axios.get(`https://blogappbackend-uy9g.onrender.com/api/v1/blog/blogById/${blogId}`, {withCredentials: true})
             reset(response.data.data)
            } catch (error) {
             error.status === 401 ? setErrorMessage("You are not authorized to perform this action or perform this task !! please login .. ") : setErrorMessage(error.response.data)
@@ -39,7 +39,7 @@ function EditBlog() {
           formData.append("tags", data.tags);
           formData.append("content", data.content);
   
-          const response = await axios.patch(`/api/v1/blog/updateBlog/${blogId}`, formData,
+          const response = await axios.patch(`https://blogappbackend-uy9g.onrender.com/api/v1/blog/updateBlog/${blogId}`, formData,
             {
               headers: {
                 "Content-Type": "multipart/form-data", 

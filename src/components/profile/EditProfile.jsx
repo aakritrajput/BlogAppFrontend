@@ -19,7 +19,7 @@ function EditProfile() {
             const formData = new FormData();
             formData.append("profilePic", data.profilePic[0]);
 
-            const response = await axios.patch("/api/v1/user/changeProfilePic", formData, {
+            const response = await axios.patch("https://blogappbackend-uy9g.onrender.com/api/v1/user/changeProfilePic", formData, {
                 headers: {
                   "Content-Type": "multipart/form-data", 
                 },
@@ -43,7 +43,7 @@ function EditProfile() {
             const formData = new FormData();
             formData.append("bannerPic", data.bannerPic[0]);
 
-            const response = await axios.patch("/api/v1/user/changeBannerPic", formData, {
+            const response = await axios.patch("https://blogappbackend-uy9g.onrender.com/api/v1/user/changeBannerPic", formData, {
                 headers: {
                   "Content-Type": "multipart/form-data", 
                 },
@@ -65,7 +65,7 @@ function EditProfile() {
         setSuccessMessage("");
         try {
 
-            const response = await axios.patch("/api/v1/user/updateProfile", data, { withCredentials: true }) 
+            const response = await axios.patch("https://blogappbackend-uy9g.onrender.com/api/v1/user/updateProfile", data, { withCredentials: true }) 
             console.log("profile updated successfully : ", response)
             setSuccessMessage(response.data.message)
         } catch (error) {

@@ -15,7 +15,7 @@ function Header() {
     useEffect(() => {
         const checkLogin = async () => {
             try {
-                const response = await axios.get('/api/v1/user/profile', { withCredentials: true });
+                const response = await axios.get('https://blogappbackend-uy9g.onrender.com/api/v1/user/profile', { withCredentials: true });
                 setLoggedIn(true);
                 dispatch(setUser(response.data.data))
             } catch (error) {
@@ -31,7 +31,7 @@ function Header() {
     const LogoutHandler = async() => {
         setLoading(true)
         try {
-            const response = await axios.get("/api/v1/user/logout", { withCredentials: true})
+            const response = await axios.get("https://blogappbackend-uy9g.onrender.com/api/v1/user/logout", { withCredentials: true})
             console.log("response logout : ", response)
             dispatch(unsetUser())
             navigate("/");
