@@ -21,7 +21,7 @@ function Header() {
             } catch (error) {
                 setLoggedIn(false);
                 dispatch(unsetUser());
-                console.log(error.status)
+                console.log("error fetching current user !!",error)
             }
         };
     
