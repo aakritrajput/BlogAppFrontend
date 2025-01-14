@@ -1,7 +1,7 @@
 //import React from 'react'
 import axios from "axios"
 import { useState, useEffect } from "react"
-import { NavLink, Link } from "react-router-dom"
+import { NavLink, Link, useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import { setUser, unsetUser } from "../store/userSlice.js"
 //import defaultProfilePicture from "../../../public/defaultProfilePicture.jpeg"
@@ -11,6 +11,7 @@ function Header() {
     const [loading, setLoading] = useState(false)
     const dispatch = useDispatch()
     const user = useSelector((state)=> state.user.user)
+    const navigate = useNavigate()
     useEffect(() => {
         const checkLogin = async () => {
             try {
@@ -33,6 +34,7 @@ function Header() {
             const response = await axios.get("/api/v1/user/logout", { withCredentials: true})
             console.log("response logout : ", response)
             dispatch(unsetUser())
+            navigate("/");
             location.reload()
         } catch (error) {
             alert(error.status === 401 ? "You are not authorized to perform this action or perform this task !! please login .. " : error.response.data)
@@ -77,7 +79,7 @@ function Header() {
 
             </li>}
             {loggedIn && <li>
-                <NavLink to={`/userProfile/${user._id}`} className={({ isActive })=> `${isActive ? "text-[#207F87] text-[25px] after:scale-x-100" : "text-[#989494] text-[25px] hover:text-[#7a7777]"} 
+                <NavLink to={`/userProfile/${user?._id}`} className={({ isActive })=> `${isActive ? "text-[#207F87] text-[25px] after:scale-x-100" : "text-[#989494] text-[25px] hover:text-[#7a7777]"} 
                 relative after:absolute  after:bottom-0 after:left-0 
                 after:w-full after:h-[2px] after:bg-[#207F87] 
                 after:scale-x-0 hover:after:scale-x-100 

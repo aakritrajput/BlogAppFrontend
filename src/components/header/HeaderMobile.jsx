@@ -48,7 +48,7 @@ function HeaderMobile() {
 
             </li>}
             {loggedIn && <li>
-                <NavLink to={`/userProfile/${user._id}`} className={({ isActive })=> `${isActive ? "text-[#207F87] text-[25px] after:scale-x-100" : "text-[#989494]  hover:text-[#7a7777]"} w-[35px] h-[35px] `}>
+                <NavLink to={`/userProfile/${user?._id}`} className={({ isActive })=> `${isActive ? "text-[#207F87] text-[25px] after:scale-x-100" : "text-[#989494]  hover:text-[#7a7777]"} w-[35px] h-[35px] `}>
                     {user?.profilePic?.length > 0 ? <img src={user.profilePic} className="object-cover h-[35px] w-[35px] border-2 rounded-full border-current"/> : <img src={defaultProfilePicture} className="object-cover h-[35px] w-[35px] border-2 rounded-full border-current"/>}
                 </NavLink>
             </li>}

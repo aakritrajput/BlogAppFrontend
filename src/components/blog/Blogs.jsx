@@ -304,7 +304,7 @@ function Blogs() {
         <div className='hidden' id='commentDiv'>
             <form onSubmit={handleSubmit(addCommentHandler)} className='flex relative px-6 sm:px-11 mt-4' >
                <div className=" w-[40px] h-[40px] flex-shrink-0 sm:flex items-center">
-                   {currentUser?.profilePic?.length > 0 ? <img src={currentUser?.profilePic}  className=" rounded-full" /> : <img src={defaultProfilePicture}  className="rounded-full" /> }
+                   {currentUser?.profilePic?.length > 0 ? <img src={currentUser?.profilePic}  className="w-[40px] h-[40px] rounded-full object-cover" /> : <img src={defaultProfilePicture}  className="w-[40px] h-[40px] object-cover rounded-full" /> }
                </div>
                <input type="text" placeholder='Enter your comment..' className=' bg-transparent flex-1 mr-[60px] focus:outline-none border-b-[2px] border-b-gray-700 px-4 my-4 text-[14px] placeholder:text-gray-600' {...register("content", {required: "comment cannot be empty!!"})}/>
                <button type='submit' className='bg-[#207F87] px-3 py-1 h-[40px] absolute bottom-4 right-[24px] sm:right-11 rounded-lg text-white'>POST</button>
