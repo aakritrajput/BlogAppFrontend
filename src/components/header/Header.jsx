@@ -35,14 +35,14 @@ function Header() {
             const response = await axios.get("https://blogappbackend-uy9g.onrender.com/api/v1/user/logout", { withCredentials: true})
             console.log("response logout : ", response)
             dispatch(unsetUser())
-            navigate("/");
+            
             location.reload()
         } catch (error) {
             alert(error.status === 401 ? "You are not authorized to perform this action or perform this task !! please login .. " : error.response.data)
         }finally{
             setLoading(false)
         }
-    }
+    } 
     console.log("currentUserMain status:", loggedIn)
   return (
     <>
