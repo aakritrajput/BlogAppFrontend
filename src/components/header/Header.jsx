@@ -25,7 +25,7 @@ function Header() {
                 console.log("error fetching current user !!",error)
             }
         };
-    
+
         checkLogin(); 
     }, [dispatch]);
 

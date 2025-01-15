@@ -36,7 +36,7 @@ function Login() {
         }
         setLoading(true);
         try {
-            const response = await axios.post("https://blogappbackend-uy9g.onrender.com/api/v1/user/login", formData)
+            const response = await axios.post("https://blogappbackend-uy9g.onrender.com/api/v1/user/login", formData, {withCredentials:true})
             console.log("response:",response)
             dispatch(setUser(response.data._id))
             navigate("/")
