@@ -11,7 +11,7 @@ function Header() {
     const [loading, setLoading] = useState(false)
     const dispatch = useDispatch()
     const user = useSelector((state)=> state.user.user)
-    const navigate = useNavigate()
+    //const navigate = useNavigate()
     useEffect(() => {
         const checkLogin = async () => {
             try {
@@ -32,11 +32,12 @@ function Header() {
     const LogoutHandler = async() => {
         setLoading(true)
         try {
+            console.log("logout handler try block runs")
             const response = await axios.get("https://blogappbackend-uy9g.onrender.com/api/v1/user/logout", { withCredentials: true})
             console.log("response logout : ", response)
             dispatch(unsetUser())
             
-            location.reload()
+            //location.reload()
         } catch (error) {
             alert(error.status === 401 ? "You are not authorized to perform this action or perform this task !! please login .. " : error.response.data)
         }finally{
