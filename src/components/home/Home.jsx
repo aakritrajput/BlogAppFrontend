@@ -17,12 +17,10 @@ function Home() {
     setLoading(true);
     try {
       const response = await axios.get(`https://blogappbackend-uy9g.onrender.com/api/v1/blog/allBlogs?page=${page}&limit=${limit}`)
-      console.log("blogs response : ", response)
       setBlogs((prev)=>[...prev , ...response.data.data.docs])
       setHasMore(page < response.data.data.totalPages)
     } catch (error) {
       setErrorMessage(error.response?.data?.message || "An error occurred while fetching blogs")
-      console.log(error)
     }finally{
       setLoading(false)
     }

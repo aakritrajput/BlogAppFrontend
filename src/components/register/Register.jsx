@@ -15,14 +15,11 @@ function Register() {
     const SubmitHandler = async(data)=>{
       setErrorMessage("");
       setSuccessMessage("");
-        console.log(data)
         setLoading(true)
         try {
             const response = await axios.post("https://blogappbackend-uy9g.onrender.com/api/v1/user/register", data)
-            console.log(response.data.message)
             setSuccessMessage(response.data.message)
         } catch (error) {
-            console.log("error:", error, "error.message:", error.message)
             setErrorMessage(error.response.data.message)
         } finally{
             setLoading(false)

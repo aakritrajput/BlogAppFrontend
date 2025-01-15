@@ -15,11 +15,9 @@ function ResendVerificationLink() {
         setErrorMessage("");
         setSuccessMessage("");
         try {
-            console.log("data:",data)
             const response = await axios.get(`https://blogappbackend-uy9g.onrender.com/api/v1/user/resendVerificationLink/${encodeURIComponent(data.email)}`)
             setSuccessMessage(response.data.message)
         } catch (error) {
-            console.log(error)
             setErrorMessage(error.response.data)
         }finally{
             setLoading(false)

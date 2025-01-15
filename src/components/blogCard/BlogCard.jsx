@@ -13,7 +13,6 @@ function BlogCard({coverImage , title, content , authorImage="", authorName, blo
   const previewContent = content?.length > maxLength ? content.slice(0, maxLength) + "..." : content ;
   const navigate = useNavigate();
   const user = useSelector((state) => state.user.user);
-  //console.log(`user in redux store is`, user)
 
 
   useEffect(()=>{

@@ -46,7 +46,6 @@ function EditBlog() {
               },
               withCredentials: true, 
             })
-          console.log("blog updated successfully : ", response)
           setSuccessMessage(response.data.message);
           
         } catch (error) {

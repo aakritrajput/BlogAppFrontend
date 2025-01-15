@@ -26,7 +26,6 @@ function CreateBlog() {
             },
             withCredentials: true, 
           })
-        console.log("blog created successfully : ", response)
         setSuccessMessage(response.data.message)
         
       } catch (error) {

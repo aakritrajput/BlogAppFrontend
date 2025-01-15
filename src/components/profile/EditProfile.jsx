@@ -25,11 +25,9 @@ function EditProfile() {
                 },
                 withCredentials: true, 
               }) 
-            console.log("profilePic uploaded successfully : ", response)
             setSuccessMessage(response.data.message)
         } catch (error) {
             error.status === 401 ? setErrorMessage("You are not authorized to perform this action or perform this task !! please login .. ") : setErrorMessage(error.response.data)
-            console.log("error uploading profilePic" , error.response.data)
         }finally{
             setLoading(false);
         }
@@ -49,11 +47,9 @@ function EditProfile() {
                 },
                 withCredentials: true, 
               }) 
-            console.log("bannerPic uploaded successfully : ", response)
             setSuccessMessage(response.data.message)
         } catch (error) {
             setErrorMessage(error.response.data)
-            console.log("error uploading bannerPic" , error.response.data)
         }finally{
             setLoading(false);
         }
@@ -66,11 +62,9 @@ function EditProfile() {
         try {
 
             const response = await axios.patch("https://blogappbackend-uy9g.onrender.com/api/v1/user/updateProfile", data, { withCredentials: true }) 
-            console.log("profile updated successfully : ", response)
             setSuccessMessage(response.data.message)
         } catch (error) {
             setErrorMessage(error.response.data)
-            console.log("error updating Profile" , error.response.data)
         }finally{
             setLoading(false);
         }

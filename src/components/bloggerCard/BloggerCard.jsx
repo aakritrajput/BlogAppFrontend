@@ -24,9 +24,6 @@ function BloggerCard({username, fullname,  userId, profilePic=""}) {
                 const FollowingCountResponse = await axios.get(`https://blogappbackend-uy9g.onrender.com/api/v1/followings/followerAndFollowingCount/${userId}`,{withCredentials: true})
                 const followingStatusResponse = await axios.get(`https://blogappbackend-uy9g.onrender.com/api/v1/followings/followingStatus/${userId}`,{withCredentials: true})
     
-                //response.data.data.followers && following  --> count
-                // response.data.data.isFollowing && isFollowedByBlogger --> followingStatus
-    
                 setFollowers(FollowingCountResponse.data.data.followers);
                 setFollowing(FollowingCountResponse.data.data.following);
                 setIsFollowing(followingStatusResponse.data.data.isFollowing);
@@ -43,7 +40,7 @@ function BloggerCard({username, fullname,  userId, profilePic=""}) {
     const toggleHandler = async() => {
         setLoading(true)
         try {
-            const response = await axios.patch(`https://blogappbackend-uy9g.onrender.com/api/v1/followings/toggleFollow/${userId}`, {withCredentials: true})
+            const response = await axios.patch(`https://blogappbackend-uy9g.onrender.com/api/v1/followings/toggleFollow/${userId}`,{}, {withCredentials: true})
             if(response.data.data.Following === true){
                 setIsFollowing(true);
             }else{

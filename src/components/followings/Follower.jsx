@@ -17,11 +17,9 @@ function Follower() {
         try {
             const response = await axios.get(`https://blogappbackend-uy9g.onrender.com/api/v1/followings/userFollowers/${bloggerId}?page=${page}&limit=${limit}`, {withCredentials: true})
             setFollowers((prev)=> [...prev , ...response.data.data.docs])
-            console.log("data of followers :" , response.data.data.docs)
             setHasMore(response.data.data.hasNextPage);
         } catch (error) {
             error.status === 401 ? setErrorMessage("You are not authorized to perform this action or perform this task !! please login .. ") : setErrorMessage(error.response.data)
-            console.log(`from followers error.response.data : ${error}`)
         }finally{
             setLoading(false);
         }
@@ -32,11 +30,9 @@ function Follower() {
     },[getFollowers])
 
     const scrollHandler = (e) => {
-      console.log("scroll trigered !!")
-        const nearBottom = e.target.scrollHeight - e.target.scrollTop <= e.target.clientHeight + 50; // Start fetching when 50px from the bottom
+        const nearBottom = e.target.scrollHeight - e.target.scrollTop <= e.target.clientHeight + 50; 
         if (nearBottom && hasMore && !loading) {
-          setPage((prevPage) => prevPage + 1); // Increment page to load more blogs
-          console.log("handlescroll triggered !!")
+          setPage((prevPage) => prevPage + 1); 
         }
     }
 

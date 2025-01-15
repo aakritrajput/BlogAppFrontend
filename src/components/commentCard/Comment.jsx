@@ -20,7 +20,7 @@ function Comment({userImage, userId , username , authorId ,  commentId, content}
     const likeToggleHandler = async() => {
         setLoading(true);
         try {
-            const response = await axios.patch(`https://blogappbackend-uy9g.onrender.com/api/v1/like/toggleCommentLike/${commentId}`, {withCredentials: true})
+            const response = await axios.patch(`https://blogappbackend-uy9g.onrender.com/api/v1/like/toggleCommentLike/${commentId}`,{}, {withCredentials: true})
             if(response.data.data.like === true){
                 setLiked(true);
             }else{
@@ -53,13 +53,9 @@ function Comment({userImage, userId , username , authorId ,  commentId, content}
             try {
                 const response = await axios.get(`https://blogappbackend-uy9g.onrender.com/api/v1/like/commentLikesCount/${commentId}`, {withCredentials: true})
                 const likeStatus = await axios.get(`https://blogappbackend-uy9g.onrender.com/api/v1/like/isCommentLiked/${commentId}`, {withCredentials: true})
-                //console.log(response)
-                //console.log('likeStatus', likeStatus)
                 setLikesCount(response.data.data.likes);
                 setLiked(likeStatus.data.data.isLiked)
-                //.log('fetched comment likes count !!')
             } catch (error) {
-                //console.log('failed fetching comment likes count !!', error.response.data)
                 error.status === 401 ? setErrorMessage("You are not authorized to perform this action or perform this task !! please login .. ") : setErrorMessage(error.response.data)
             }finally{
                 setLoading(false)
@@ -80,8 +76,6 @@ function Comment({userImage, userId , username , authorId ,  commentId, content}
             setLoading(false)
         }
     }
-
-    console.log("commentOwner" , commentOwner)
     
   return (
     <div>

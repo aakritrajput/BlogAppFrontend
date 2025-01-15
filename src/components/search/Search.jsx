@@ -23,11 +23,9 @@ function Search() {
         try {
             const response = await axios.get(`https://blogappbackend-uy9g.onrender.com/api/v1/blog/searchBlogs/?query=${data.query1}&page=${page}&limit=${limit}`, {withCredentials: true})
             setItems((prev)=>[...prev , ...response.data.data.docs])
-            console.log("response from blogsearch",response)
             setHasMore(page < response.data.data.totalPages)
         } catch (error) {
             error.status === 401 ? setErrorMessage("You are not authorized to perform this action or perform this task !! please login .. ") : setErrorMessage(error.response.data)
-            console.log(`from search error.response.data : ${error.status}`)
         }finally{
             setLoading(false)
         }
@@ -40,23 +38,17 @@ function Search() {
       try {
         const response = await axios.get(`https://blogappbackend-uy9g.onrender.com/api/v1/user/bloggers?query=${data.query2}`, {withCredentials: true})
         setItems(response.data.data)
-        console.log("response from blogger search :", response)
       } catch (error) {
         error.status === 401 ? setErrorMessage("You are not authorized to perform this action or perform this task !! please login .. ") : setErrorMessage(error.response.data)
-        console.log(`from 2nd search error.response.data : ${error.response.data}`)
       }finally{
         setLoading(false)
-        console.log("items: ", items)
-        console.log("blogsearch: ", blogSearch)
       }
     }
    
       const handleScroll = useCallback((e) => {
-        console.log("handleScrolltriggered!!")
         const nearBottom = e.target.scrollHeight - e.target.scrollTop <= e.target.clientHeight + 50; // Start fetching when 50px from the bottom
         if (nearBottom && hasMore && !loading) {
           setPage((prevPage) => prevPage + 1); // Increment page to load more blogs
-          console.log("handlescroll triggered !!")
         }
       },[loading, hasMore])
 

@@ -71,7 +71,7 @@ function Profile() {
     const toggleHandler = async() => {
         setLoading(true)
         try {
-            const response = await axios.patch(`https://blogappbackend-uy9g.onrender.com/api/v1/followings/toggleFollow/${userId}`, {withCredentials: true})
+            const response = await axios.patch(`https://blogappbackend-uy9g.onrender.com/api/v1/followings/toggleFollow/${userId}`,{}, {withCredentials: true})
             if(response.data.data.Following === true){
                 setIsFollowing(true);
             }else{
@@ -113,7 +113,6 @@ function Profile() {
       try {
         const contentResponse = await axios.get(`https://blogappbackend-uy9g.onrender.com/api/v1/like/usersLikedBlogs`, {withCredentials: true});
         setContent(contentResponse.data.data);
-        //console.log("liked blogs:",contentResponse.data.data)
       } catch (error) {
         error.status === 401 ? setErrorMessage("You are not authorized to perform this action or perform this task !! please login .. ") : setErrorMessage(error.response.data)
       }finally{
@@ -131,19 +130,15 @@ function Profile() {
         const contentResponse = await axios.get(`https://blogappbackend-uy9g.onrender.com/api/v1/user/savedBlogs`, {withCredentials: true});
         if(contentResponse?.data?.data[0]?.savedBlogs?.length > 0){
           setContent(contentResponse.data.data[0].savedBlogs );
-          console.log("content saved ", contentResponse.data.data[0].savedBlogs)
         }else{
           setContent([]);
-          console.log("no content saved !")
         }
-        //console.log("savedBlogs:",contentResponse.data.data[0].savedBlogs )
       } catch (error) {
         error.status === 401 ? setErrorMessage("You are not authorized to perform this action or perform this task !! please login .. ") : setErrorMessage(error.response?.data)
       }finally{
         setLoading(false);
       }
     }
-    //console.log('content', content)
   return (
     <div className='min-h-[100vh] pb-[60px] relative '>
       {loading && 

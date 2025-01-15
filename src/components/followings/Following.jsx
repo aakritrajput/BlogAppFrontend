@@ -17,11 +17,9 @@ function Following() {
         try {
             const response = await axios.get(`https://blogappbackend-uy9g.onrender.com/api/v1/followings/userFollowings/${bloggerId}?page=${page}&limit=${limit}`, {withCredentials: true})
             setFollowing((prev)=> [...prev , ...response.data.data.docs])
-            console.log("data of followers :" , response.data.data)
             setHasMore(response.data.data.hasNextPage);
         } catch (error) {
             error.status === 401 ? setErrorMessage("You are not authorized to perform this action or perform this task !! please login .. ") : setErrorMessage(error.response.data)
-            console.log(`from followers error.response.data : ${error}`)
         }finally{
             setLoading(false);
         }

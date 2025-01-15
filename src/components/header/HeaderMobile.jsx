@@ -19,7 +19,6 @@ function HeaderMobile() {
         };
         checkLogin(); 
     }, []);
-    console.log("footer runs !!")
   return (
     <div className= " m-1 p-2 justify-center bg-[#000000d1] fixed bottom-2 w-[96%] rounded-lg  flex md:hidden z-20">
       <ul className="flex list-none gap-5  h-full justify-around w-full items-center">

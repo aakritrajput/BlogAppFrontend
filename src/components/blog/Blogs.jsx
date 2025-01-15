@@ -54,9 +54,6 @@ function Blogs() {
                 const FollowingCountResponse = await axios.get(`https://blogappbackend-uy9g.onrender.com/api/v1/followings/followerAndFollowingCount/${authorId}`,{withCredentials: true})
                 const followingStatusResponse = await axios.get(`https://blogappbackend-uy9g.onrender.com/api/v1/followings/followingStatus/${authorId}`,{withCredentials: true})
     
-                //response.data.data.followers && following  --> count
-                // response.data.data.isFollowing && isFollowedByBlogger --> followingStatus
-    
                 setFollowers(FollowingCountResponse.data.data.followers);
                 setIsFollowing(followingStatusResponse.data.data.isFollowing);
                 setIsFollowed(followingStatusResponse.data.data.isFollowedByBlogger);
@@ -79,7 +76,6 @@ function Blogs() {
                 setLiked(likestatus.data.data.isLiked);
                 setLikesCount(likeCountResponse.data.data.likes);
                 setIsBlogedSaved(isBlogSaved.data.data.isSaved);
-                //console.log("fetched Blog successfully :", response)
             } catch (error) {
                 error.status === 401 ? setErrorMessage("You are not authorized to perform this action or perform this task !! please login .. ") : setErrorMessage(error.response.data)
             }finally{
@@ -98,7 +94,7 @@ function Blogs() {
     const toggleHandler = async() => {
         setFollowLoading(true)
         try {
-            const response = await axios.patch(`https://blogappbackend-uy9g.onrender.com/api/v1/followings/toggleFollow/${authorId}`, {withCredentials: true})
+            const response = await axios.patch(`https://blogappbackend-uy9g.onrender.com/api/v1/followings/toggleFollow/${authorId}`,{}, {withCredentials: true})
             if(response.data.data.Following === true){
                 setIsFollowing(true);
             }else{
@@ -125,10 +121,8 @@ function Blogs() {
         try {
             const response = await axios.post(`https://blogappbackend-uy9g.onrender.com/api/v1/comment/postComment/${blogId}`, data, {withCredentials: true});
             setBlogComments((prev)=> [response.data.data , ...prev])
-            console.log("comment added!!", response.data.data)
         } catch (error) {
             error.status === 401 ? setErrorMessage("You are not authorized to perform this action or perform this task !! please login .. ") : setErrorMessage(error.response.data) ;
-            console.log("error adding comment")
         }finally{
             setCommentLoading(false)
             reset();
@@ -136,8 +130,7 @@ function Blogs() {
     }
     const likeToggleHandler = async() => {
         try {
-            console.log("liketoggle try runs!!");
-            const response = await axios.patch(`https://blogappbackend-uy9g.onrender.com/api/v1/like/toggleBlogLike/${blogId}`, {withCredentials:true})
+            const response = await axios.patch(`https://blogappbackend-uy9g.onrender.com/api/v1/like/toggleBlogLike/${blogId}`,{}, {withCredentials:true})
             const likeCountResponse = await axios.get(`https://blogappbackend-uy9g.onrender.com/api/v1/like/blogLikesCount/${blogId}`, {withCredentials:true})
             setLiked(response.data.data.like);
             setLikesCount(likeCountResponse.data.data.likes);
@@ -151,13 +144,11 @@ function Blogs() {
         setLoading(true);
         try {
             if(isBlogSaved === false){
-              await axios.patch(`https://blogappbackend-uy9g.onrender.com/api/v1/blog/saveBlog/${blogId}`, {withCredentials:true})
+              await axios.patch(`https://blogappbackend-uy9g.onrender.com/api/v1/blog/saveBlog/${blogId}`,{}, {withCredentials:true})
               setIsBlogedSaved(true);
-              console.log("blog saved successfully !!")
             }else{
-                await axios.patch(`https://blogappbackend-uy9g.onrender.com/api/v1/user/removeFromSavedBlogs/${blogId}`, {withCredentials:true})
+                await axios.patch(`https://blogappbackend-uy9g.onrender.com/api/v1/user/removeFromSavedBlogs/${blogId}`,{}, {withCredentials:true})
                 setIsBlogedSaved(false);
-                console.log("blog unsaved successfully !!")
             }
         } catch (error) {
             error.status === 401 ? setErrorMessage("You are not authorized to perform this action or perform this task !! please login .. ") : setErrorMessage(error.response.data)

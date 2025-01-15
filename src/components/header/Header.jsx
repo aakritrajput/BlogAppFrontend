@@ -18,11 +18,10 @@ function Header() {
                 const response = await axios.get('https://blogappbackend-uy9g.onrender.com/api/v1/user/profile', { withCredentials: true });
                 setLoggedIn(true);
                 dispatch(setUser(response.data.data))
-                console.log("current user :", response)
             } catch (error) {
                 setLoggedIn(false);
                 dispatch(unsetUser());
-                console.log("error fetching current user !!",error)
+                console.log("error fetching current user !!",error.message)
             }
         };
 
@@ -32,9 +31,7 @@ function Header() {
     const LogoutHandler = async() => {
         setLoading(true)
         try {
-            console.log("logout handler try block runs")
-            const response = await axios.get("https://blogappbackend-uy9g.onrender.com/api/v1/user/logout", { withCredentials: true})
-            console.log("response logout : ", response)
+            await axios.get("https://blogappbackend-uy9g.onrender.com/api/v1/user/logout", { withCredentials: true})
             dispatch(unsetUser())
             navigate("/")
             location.reload()
@@ -44,7 +41,6 @@ function Header() {
             setLoading(false)
         }
     } 
-    console.log("currentUserMain status:", loggedIn)
   return (
     <>
     <div className="flex justify-between px-4  bg-[#DDDBDB]">
