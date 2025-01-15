@@ -34,7 +34,7 @@ function BlogCard({coverImage , title, content , authorImage="", authorName, blo
 
   const authorProfileHandler = () => {
     if(loggedIn){
-      navigate(`userProfile/${authorId}`)
+      navigate(`/userProfile/${authorId}`)
     }else{
       alert("Please login to view authors Profile ")
     }
