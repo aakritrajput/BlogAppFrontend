@@ -26,7 +26,12 @@ The frontend for BlogApp is built using React and provides a seamless user exper
 🔗 **GitHub Repository:** [BlogApp Frontend](https://github.com/aakritrajput/BlogAppFrontend)
 
 ## 📸 Screenshots
-(Include screenshots or UI previews here)
+![HomePage](https://github.com/aakritrajput/BlogAppFrontend/blob/main/screenshots/Screenshot%202025-02-14%20175514.png)
+![LoginPage](https://github.com/aakritrajput/BlogAppFrontend/blob/main/screenshots/Screenshot%202025-02-14%20175528.png)
+![SearchPage](https://github.com/aakritrajput/BlogAppFrontend/blob/main/screenshots/Screenshot%202025-02-14%20175635.png)
+![CreatePage](https://github.com/aakritrajput/BlogAppFrontend/blob/main/screenshots/Screenshot%202025-02-14%20175649.png)
+![ProfilePage](https://github.com/aakritrajput/BlogAppFrontend/blob/main/screenshots/Screenshot%202025-02-14%20175954.png)
+
 
 ## 📬 Contact
 For any queries or suggestions, feel free to reach out!
