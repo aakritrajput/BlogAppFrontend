@@ -12,28 +12,12 @@ function Home() {
   const [page, setPage] = useState(1);
   const limit = 10 ; 
 
-  // Function to get blogs from cache (if available)
-  const getCachedBlogs = () => {
-    const cachedData = localStorage.getItem("cachedBlogs");
-    return cachedData ? JSON.parse(cachedData) : [];
-  };
-
-  // Function to save blogs to cache
-  const saveBlogsToCache = (blogs) => {
-    localStorage.setItem("cachedBlogs", JSON.stringify(blogs));
-  };
-
   const getBlogs = useCallback(async() => {
     if (loading || !hasMore) return ;
     setLoading(true);
     try {
       const response = await axios.get(`https://blogappbackend-uy9g.onrender.com/api/v1/blog/allBlogs?page=${page}&limit=${limit}`)
-      const newBlogs = response.data.data.docs;
-      setBlogs((prev) => {
-        const updatedBlogs = [...prev, ...newBlogs];
-        saveBlogsToCache(updatedBlogs);
-        return updatedBlogs;
-      });
+      setBlogs((prev)=>[...prev , ...response.data.data.docs])
       setHasMore(page < response.data.data.totalPages)
     } catch (error) {
       setErrorMessage(error.response?.data?.message || "An error occurred while fetching blogs")
@@ -50,15 +34,11 @@ function Home() {
     }
   },[loading, hasMore])
 
-  useEffect(() => {
-    const cachedBlogs = getCachedBlogs();
-    if (cachedBlogs.length > 0 && page === 1) {
-      setBlogs(cachedBlogs); // Load cached data on initial render
-    } else {
-      getBlogs(); // Fetch new blogs only if page > 1 or cache is empty
-    }
-  }, [getBlogs, page]);
+  useEffect(()=>{
+    getBlogs();
+  }, [getBlogs])
 
+  
 
 
   return (
