@@ -1,92 +1,39 @@
-//import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-//import App from './App.jsx'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import Register from './components/register/Register.jsx'
-import Login from './components/login/Login.jsx'
-import { Provider } from 'react-redux'
-import store from './components/store/store.js'
-import ResendVerificationLink from './components/verification/ResendVerificationLink.jsx'
-import VerifyEmail from './components/verification/VerifyEmail.jsx'
-import CreateBlog from './components/createBlog/CreateBlog.jsx'
-import Root from './components/root/Root.jsx'
-import Home from './components/home/Home.jsx'
-import Search from './components/search/Search.jsx'
-import Profile from './components/profile/Profile.jsx'
-import EditProfile from './components/profile/EditProfile.jsx'
-import Blogs from './components/blog/Blogs.jsx'
-import EditBlog from './components/blog/editBlog.jsx'
-import Follower from './components/followings/Follower.jsx'
-import Following from './components/followings/Following.jsx'
-
+import { createRoot } from "react-dom/client";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { Suspense } from "react";
+import { Provider } from "react-redux";
+import store from "./components/store/store.js";
+import "./index.css";
+import {
+  Register, Login, ResendVerificationLink, VerifyEmail, CreateBlog, Root,
+  Home, Search, Profile, EditProfile, Blogs, EditBlog, Follower, Following
+} from "./components/LazyComponents.jsx";
+import Loader from "./components/Loader.jsx";
 
 const router = createBrowserRouter([
-  {
-    path: "/register",
-    element: <Register/>
-  },
-  {
-    path: "/login",
-    element: <Login/>
-  },
-  {
-    path: "/resendVerificationLink",
-    element: <ResendVerificationLink/>
-  },
-  {
-    path: "/verifyEmail",
-    element: <VerifyEmail/>
-  },
+  { path: "/register", element: <Suspense fallback={<Loader />}><Register /></Suspense> },
+  { path: "/login", element: <Suspense fallback={<Loader />}><Login /></Suspense> },
+  { path: "/resendVerificationLink", element: <Suspense fallback={<Loader />}><ResendVerificationLink /></Suspense> },
+  { path: "/verifyEmail", element: <Suspense fallback={<Loader />}><VerifyEmail /></Suspense> },
   {
     path: "/",
-    element: <Root/>,
+    element: <Suspense fallback={<Loader />}><Root /></Suspense>,
     children: [
-      {
-        path: "",
-        element: <Home/>
-      },
-      {
-        path: "create",
-        element: <CreateBlog/>
-      },
-      {
-        path: "search",
-        element: <Search/>
-      },
-      {
-        path: "userProfile/:userId",
-        element: <Profile/>
-      }
+      { path: "", element: <Suspense fallback={<Loader />}><Home /></Suspense> },
+      { path: "create", element: <Suspense fallback={<Loader />}><CreateBlog /></Suspense> },
+      { path: "search", element: <Suspense fallback={<Loader />}><Search /></Suspense> },
+      { path: "userProfile/:userId", element: <Suspense fallback={<Loader />}><Profile /></Suspense> }
     ]
   },
-  {
-    path: "/editProfile",
-    element: <EditProfile/>
-  },
-  {
-    path: "/blog/:blogId/:authorId",
-    element: <Blogs/>
-  },
-  {
-    path: "/editBlog/:blogId",
-    element: <EditBlog/>
-  },
-  {
-    path: "/userFollowers/:bloggerId",
-    element: <Follower/>
-  },
-  {
-    path: "/userFollowings/:bloggerId",
-    element: <Following/>
-  }
-])
+  { path: "/editProfile", element: <Suspense fallback={<Loader />}><EditProfile /></Suspense> },
+  { path: "/blog/:blogId/:authorId", element: <Suspense fallback={<Loader />}><Blogs /></Suspense> },
+  { path: "/editBlog/:blogId", element: <Suspense fallback={<Loader />}><EditBlog /></Suspense> },
+  { path: "/userFollowers/:bloggerId", element: <Suspense fallback={<Loader />}><Follower /></Suspense> },
+  { path: "/userFollowings/:bloggerId", element: <Suspense fallback={<Loader />}><Following /></Suspense> }
+]);
 
-createRoot(document.getElementById('root')).render(
- 
-    <Provider store={store}>
-      <RouterProvider router={router}/>
-    </Provider>
-  
-)
-
+createRoot(document.getElementById("root")).render(
+  <Provider store={store}>
+    <RouterProvider router={router} />
+  </Provider>
+);
